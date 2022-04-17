@@ -1,0 +1,1 @@
+class SystemException implements Exception {}
