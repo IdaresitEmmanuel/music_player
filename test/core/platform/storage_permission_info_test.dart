@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:music_player/core/platform/storage_permission_info.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
-import '../../features/music/data/datasources/music_local_data_source_test.mocks.dart';
+import '../../features/music/data/datasources/music_data_sources/music_local_data_source_test.mocks.dart';
 
 @GenerateMocks([OnAudioQuery])
 void main() {

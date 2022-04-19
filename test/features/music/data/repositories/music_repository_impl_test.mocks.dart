@@ -2,30 +2,20 @@
 // in music_player/test/features/music/data/repositories/music_repository_impl_test.dart.
 // Do not manually edit this file.
 
-import 'dart:async' as _i5;
+import 'dart:async' as _i3;
 
-import 'package:dartz/dartz.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:music_player/core/error/failures.dart' as _i11;
-import 'package:music_player/core/platform/storage_permission_info.dart' as _i3;
-import 'package:music_player/features/music/data/datasources/music_local_data_source.dart'
+import 'package:music_player/core/platform/storage_permission_info.dart' as _i8;
+import 'package:music_player/features/music/data/datasources/music_data_source/music_local_data_source.dart'
     as _i2;
 import 'package:music_player/features/music/data/models/album_model.dart'
-    as _i8;
-import 'package:music_player/features/music/data/models/artist_model.dart'
-    as _i7;
-import 'package:music_player/features/music/data/models/folder_model.dart'
-    as _i9;
-import 'package:music_player/features/music/data/models/music_model.dart'
     as _i6;
-import 'package:music_player/features/music/data/repositories/music_repository_impl.dart'
-    as _i10;
-import 'package:music_player/features/music/domain/entities/album.dart' as _i12;
-import 'package:music_player/features/music/domain/entities/artist.dart'
-    as _i14;
-import 'package:music_player/features/music/domain/entities/folder.dart'
-    as _i15;
-import 'package:music_player/features/music/domain/entities/music.dart' as _i13;
+import 'package:music_player/features/music/data/models/artist_model.dart'
+    as _i5;
+import 'package:music_player/features/music/data/models/folder_model.dart'
+    as _i7;
+import 'package:music_player/features/music/data/models/music_model.dart'
+    as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -37,14 +27,6 @@ import 'package:music_player/features/music/domain/entities/music.dart' as _i13;
 // ignore_for_file: unnecessary_parenthesis
 // ignore_for_file: camel_case_types
 
-class _FakeMusicLocalDataSource_0 extends _i1.Fake
-    implements _i2.MusicLocalDataSource {}
-
-class _FakeStoragePermissionInfo_1 extends _i1.Fake
-    implements _i3.StoragePermissionInfo {}
-
-class _FakeEither_2<L, R> extends _i1.Fake implements _i4.Either<L, R> {}
-
 /// A class which mocks [MusicLocalDataSource].
 ///
 /// See the documentation for Mockito's code generation for more information.
@@ -55,142 +37,61 @@ class MockMusicLocalDataSource extends _i1.Mock
   }
 
   @override
-  _i5.Future<List<_i6.MusicModel>> getAllMusic() => (super.noSuchMethod(
+  _i3.Future<List<_i4.MusicModel>> getAllMusic() => (super.noSuchMethod(
           Invocation.method(#getAllMusic, []),
-          returnValue: Future<List<_i6.MusicModel>>.value(<_i6.MusicModel>[]))
-      as _i5.Future<List<_i6.MusicModel>>);
+          returnValue: Future<List<_i4.MusicModel>>.value(<_i4.MusicModel>[]))
+      as _i3.Future<List<_i4.MusicModel>>);
   @override
-  _i5.Future<List<_i7.ArtistsModel>> getArtists() =>
+  _i3.Future<List<_i5.ArtistsModel>> getArtists() =>
       (super.noSuchMethod(Invocation.method(#getArtists, []),
               returnValue:
-                  Future<List<_i7.ArtistsModel>>.value(<_i7.ArtistsModel>[]))
-          as _i5.Future<List<_i7.ArtistsModel>>);
+                  Future<List<_i5.ArtistsModel>>.value(<_i5.ArtistsModel>[]))
+          as _i3.Future<List<_i5.ArtistsModel>>);
   @override
-  _i5.Future<List<_i8.AlbumsModel>> getAlbums() => (super.noSuchMethod(
+  _i3.Future<List<_i6.AlbumsModel>> getAlbums() => (super.noSuchMethod(
           Invocation.method(#getAlbums, []),
-          returnValue: Future<List<_i8.AlbumsModel>>.value(<_i8.AlbumsModel>[]))
-      as _i5.Future<List<_i8.AlbumsModel>>);
+          returnValue: Future<List<_i6.AlbumsModel>>.value(<_i6.AlbumsModel>[]))
+      as _i3.Future<List<_i6.AlbumsModel>>);
   @override
-  _i5.Future<List<_i9.FolderModel>> getFolders() => (super.noSuchMethod(
+  _i3.Future<List<_i7.FolderModel>> getFolders() => (super.noSuchMethod(
           Invocation.method(#getFolders, []),
-          returnValue: Future<List<_i9.FolderModel>>.value(<_i9.FolderModel>[]))
-      as _i5.Future<List<_i9.FolderModel>>);
+          returnValue: Future<List<_i7.FolderModel>>.value(<_i7.FolderModel>[]))
+      as _i3.Future<List<_i7.FolderModel>>);
   @override
-  _i5.Future<List<_i6.MusicModel>> getMusicByArtist(String? artist) =>
+  _i3.Future<List<_i4.MusicModel>> getMusicByArtist(String? artist) =>
       (super.noSuchMethod(Invocation.method(#getMusicByArtist, [artist]),
               returnValue:
-                  Future<List<_i6.MusicModel>>.value(<_i6.MusicModel>[]))
-          as _i5.Future<List<_i6.MusicModel>>);
+                  Future<List<_i4.MusicModel>>.value(<_i4.MusicModel>[]))
+          as _i3.Future<List<_i4.MusicModel>>);
   @override
-  _i5.Future<List<_i6.MusicModel>> getMusicByAlbum(String? album) =>
+  _i3.Future<List<_i4.MusicModel>> getMusicByAlbum(String? album) =>
       (super.noSuchMethod(Invocation.method(#getMusicByAlbum, [album]),
               returnValue:
-                  Future<List<_i6.MusicModel>>.value(<_i6.MusicModel>[]))
-          as _i5.Future<List<_i6.MusicModel>>);
+                  Future<List<_i4.MusicModel>>.value(<_i4.MusicModel>[]))
+          as _i3.Future<List<_i4.MusicModel>>);
   @override
-  _i5.Future<List<_i6.MusicModel>> getMusicByFolder(String? folder) =>
+  _i3.Future<List<_i4.MusicModel>> getMusicByFolder(String? folder) =>
       (super.noSuchMethod(Invocation.method(#getMusicByFolder, [folder]),
               returnValue:
-                  Future<List<_i6.MusicModel>>.value(<_i6.MusicModel>[]))
-          as _i5.Future<List<_i6.MusicModel>>);
-}
-
-/// A class which mocks [MusicRepositoryImpl].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockMusicRepositoryImpl extends _i1.Mock
-    implements _i10.MusicRepositoryImpl {
-  MockMusicRepositoryImpl() {
-    _i1.throwOnMissingStub(this);
-  }
-
-  @override
-  _i2.MusicLocalDataSource get dataSource => (super.noSuchMethod(
-      Invocation.getter(#dataSource),
-      returnValue: _FakeMusicLocalDataSource_0()) as _i2.MusicLocalDataSource);
-  @override
-  set dataSource(_i2.MusicLocalDataSource? _dataSource) =>
-      super.noSuchMethod(Invocation.setter(#dataSource, _dataSource),
-          returnValueForMissingStub: null);
-  @override
-  _i3.StoragePermissionInfo get storagePermissionInfo =>
-      (super.noSuchMethod(Invocation.getter(#storagePermissionInfo),
-              returnValue: _FakeStoragePermissionInfo_1())
-          as _i3.StoragePermissionInfo);
-  @override
-  set storagePermissionInfo(
-          _i3.StoragePermissionInfo? _storagePermissionInfo) =>
-      super.noSuchMethod(
-          Invocation.setter(#storagePermissionInfo, _storagePermissionInfo),
-          returnValueForMissingStub: null);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i12.Album>>> getAlbums() =>
-      (super.noSuchMethod(Invocation.method(#getAlbums, []),
-          returnValue: Future<_i4.Either<_i11.Failure, List<_i12.Album>>>.value(
-              _FakeEither_2<_i11.Failure, List<_i12.Album>>())) as _i5
-          .Future<_i4.Either<_i11.Failure, List<_i12.Album>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i13.Music>>> getAllMusic() =>
-      (super.noSuchMethod(Invocation.method(#getAllMusic, []),
-          returnValue: Future<_i4.Either<_i11.Failure, List<_i13.Music>>>.value(
-              _FakeEither_2<_i11.Failure, List<_i13.Music>>())) as _i5
-          .Future<_i4.Either<_i11.Failure, List<_i13.Music>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i14.Artist>>> getArtists() =>
-      (super.noSuchMethod(Invocation.method(#getArtists, []),
-              returnValue:
-                  Future<_i4.Either<_i11.Failure, List<_i14.Artist>>>.value(
-                      _FakeEither_2<_i11.Failure, List<_i14.Artist>>()))
-          as _i5.Future<_i4.Either<_i11.Failure, List<_i14.Artist>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i15.Folder>>> getFolders() =>
-      (super.noSuchMethod(Invocation.method(#getFolders, []),
-              returnValue:
-                  Future<_i4.Either<_i11.Failure, List<_i15.Folder>>>.value(
-                      _FakeEither_2<_i11.Failure, List<_i15.Folder>>()))
-          as _i5.Future<_i4.Either<_i11.Failure, List<_i15.Folder>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i13.Music>>> getMusicByAlbum(
-          String? album) =>
-      (super.noSuchMethod(Invocation.method(#getMusicByAlbum, [album]),
-          returnValue: Future<_i4.Either<_i11.Failure, List<_i13.Music>>>.value(
-              _FakeEither_2<_i11.Failure, List<_i13.Music>>())) as _i5
-          .Future<_i4.Either<_i11.Failure, List<_i13.Music>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i13.Music>>> getMusicByArtist(
-          String? artist) =>
-      (super.noSuchMethod(Invocation.method(#getMusicByArtist, [artist]),
-          returnValue: Future<_i4.Either<_i11.Failure, List<_i13.Music>>>.value(
-              _FakeEither_2<_i11.Failure, List<_i13.Music>>())) as _i5
-          .Future<_i4.Either<_i11.Failure, List<_i13.Music>>>);
-  @override
-  _i5.Future<_i4.Either<_i11.Failure, List<_i13.Music>>> getMusicByFolder(
-          String? folder) =>
-      (super.noSuchMethod(Invocation.method(#getMusicByFolder, [folder]),
-          returnValue: Future<_i4.Either<_i11.Failure, List<_i13.Music>>>.value(
-              _FakeEither_2<_i11.Failure, List<_i13.Music>>())) as _i5
-          .Future<_i4.Either<_i11.Failure, List<_i13.Music>>>);
-  @override
-  _i5.Future<bool> requestStoragePermission() =>
-      (super.noSuchMethod(Invocation.method(#requestStoragePermission, []),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
+                  Future<List<_i4.MusicModel>>.value(<_i4.MusicModel>[]))
+          as _i3.Future<List<_i4.MusicModel>>);
 }
 
 /// A class which mocks [StoragePermissionInfo].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockStoragePermissionInfo extends _i1.Mock
-    implements _i3.StoragePermissionInfo {
+    implements _i8.StoragePermissionInfo {
   MockStoragePermissionInfo() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i5.Future<bool> get hasPermission =>
+  _i3.Future<bool> get hasPermission =>
       (super.noSuchMethod(Invocation.getter(#hasPermission),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
   @override
-  _i5.Future<bool> requestStoragePermission() =>
+  _i3.Future<bool> requestStoragePermission() =>
       (super.noSuchMethod(Invocation.method(#requestStoragePermission, []),
-          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
+          returnValue: Future<bool>.value(false)) as _i3.Future<bool>);
 }

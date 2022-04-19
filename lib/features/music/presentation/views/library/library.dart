@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/features/music/presentation/bloc/settings_bloc/settings_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/album_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/artist_page.dart';
@@ -34,7 +37,26 @@ class _LibraryState extends State<Library> with TickerProviderStateMixin {
               horizontal: AppDimentions.pageMargin, vertical: 20.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [Icon(Icons.menu), Icon(Icons.search)],
+            children: [
+              BlocBuilder<SettingsBloc, SettingsState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                      onTap: () {
+                        if (state.theme == ThemeSetting.dark) {
+                          context
+                              .read<SettingsBloc>()
+                              .add(SetThemeEvent(theme: ThemeSetting.light));
+                        } else {
+                          context
+                              .read<SettingsBloc>()
+                              .add(SetThemeEvent(theme: ThemeSetting.dark));
+                        }
+                      },
+                      child: const Icon(Icons.menu));
+                },
+              ),
+              const Icon(Icons.search)
+            ],
           ),
         ),
         TabBar(

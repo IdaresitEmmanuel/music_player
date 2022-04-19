@@ -5,8 +5,8 @@ import 'package:mockito/mockito.dart';
 import 'package:music_player/core/error/exceptions.dart';
 import 'package:music_player/core/error/failures.dart';
 import 'package:music_player/core/platform/storage_permission_info.dart';
-import 'package:music_player/core/utility/helper_functions.dart';
-import 'package:music_player/features/music/data/datasources/music_local_data_source.dart';
+import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/features/music/data/datasources/music_data_source/music_local_data_source.dart';
 import 'package:music_player/features/music/data/models/album_model.dart';
 import 'package:music_player/features/music/data/models/artist_model.dart';
 import 'package:music_player/features/music/data/models/folder_model.dart';
@@ -15,8 +15,7 @@ import 'package:music_player/features/music/data/repositories/music_repository_i
 
 import 'music_repository_impl_test.mocks.dart';
 
-@GenerateMocks(
-    [MusicLocalDataSource, MusicRepositoryImpl, StoragePermissionInfo])
+@GenerateMocks([MusicLocalDataSource, StoragePermissionInfo])
 void main() {
   // test to request for storage permission
   test('should make a storage permission request', () async {
@@ -42,8 +41,8 @@ void main() {
     MusicRepositoryImpl repo = MusicRepositoryImpl(
         dataSource: dataSource,
         storagePermissionInfo: mockStoragePermissionInfo);
-    const MusicModel musicModel = MusicModel(
-        title: 'title', artist: 'artist', album: 'album', path: 'path');
+    const MusicModel musicModel =
+        MusicModel(id: 1, title: 'title', path: 'path', data: 'data', size: 1);
     List<MusicModel> musicModelList = [musicModel];
 
     test('should check for storage permission', () async {
@@ -185,7 +184,7 @@ void main() {
         dataSource: dataSource,
         storagePermissionInfo: mockStoragePermissionInfo);
     final AlbumsModel albumModel =
-        AlbumsModel(name: 'title', noOfSongs: playListNoToString(4));
+        AlbumsModel(id: 1, name: 'title', noOfSongs: playListNoToString(4));
     List<AlbumsModel> albumModelList = [albumModel];
 
     test('should check for storage permission', () async {
@@ -326,8 +325,8 @@ void main() {
     MusicRepositoryImpl repo = MusicRepositoryImpl(
         dataSource: dataSource,
         storagePermissionInfo: mockStoragePermissionInfo);
-    const MusicModel musicModel = MusicModel(
-        title: 'title', artist: 'artist', album: 'album', path: 'path');
+    const MusicModel musicModel =
+        MusicModel(id: 1, title: 'title', path: 'path', data: 'data', size: 2);
     List<MusicModel> musicModelList = [musicModel];
     const artistName = 'artist';
 
@@ -340,7 +339,7 @@ void main() {
           .thenAnswer((_) async => true);
       // act
       repo.getMusicByArtist(artistName);
-      // // assert
+      // assert
       verify(mockStoragePermissionInfo.hasPermission);
     });
 
@@ -402,8 +401,8 @@ void main() {
     MusicRepositoryImpl repo = MusicRepositoryImpl(
         dataSource: dataSource,
         storagePermissionInfo: mockStoragePermissionInfo);
-    const MusicModel musicModel = MusicModel(
-        title: 'title', artist: 'artist', album: 'album', path: 'path');
+    const MusicModel musicModel =
+        MusicModel(id: 1, title: 'title', path: 'path', data: 'data', size: 8);
     List<MusicModel> musicModelList = [musicModel];
     const albumName = 'album';
 
@@ -478,8 +477,8 @@ void main() {
     MusicRepositoryImpl repo = MusicRepositoryImpl(
         dataSource: dataSource,
         storagePermissionInfo: mockStoragePermissionInfo);
-    const MusicModel musicModel = MusicModel(
-        title: 'title', artist: 'artist', album: 'album', path: 'path');
+    const MusicModel musicModel =
+        MusicModel(id: 1, title: 'title', path: 'path', data: 'data', size: 1);
     List<MusicModel> musicModelList = [musicModel];
     const folderName = 'folder';
 

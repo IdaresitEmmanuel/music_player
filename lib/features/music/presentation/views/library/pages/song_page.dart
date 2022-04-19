@@ -26,7 +26,7 @@ class _SongPageState extends State<SongPage> {
                 // height: 30.0,
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.dividerColor),
+                    border: Border.all(color: AppColors.dividerColorDark),
                     borderRadius: BorderRadius.circular(6.0)),
                 child: Row(
                   children: [
@@ -43,7 +43,7 @@ class _SongPageState extends State<SongPage> {
                 // height: 30.0,
                 padding: const EdgeInsets.all(5.0),
                 decoration: BoxDecoration(
-                    border: Border.all(color: AppColors.dividerColor),
+                    border: Border.all(color: AppColors.dividerColorDark),
                     borderRadius: BorderRadius.circular(6.0)),
                 child: Row(
                   children: [
@@ -77,9 +77,10 @@ class _SongPageState extends State<SongPage> {
               return ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: state.musicList.length,
+                cacheExtent: state.musicList.length.toDouble(),
                 itemBuilder: (context, index) {
                   final music = state.musicList[index];
-                  return SongWidget(title: music.title, artist: music.artist);
+                  return SongWidget(song: music);
                 },
               );
             },

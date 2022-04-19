@@ -1,13 +1,13 @@
 import 'package:music_player/core/error/exceptions.dart';
 import 'package:music_player/core/platform/storage_permission_info.dart';
-import 'package:music_player/features/music/data/datasources/music_local_data_source.dart';
+import 'package:music_player/features/music/data/datasources/music_data_source/music_local_data_source.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/entities/album.dart';
 import 'package:music_player/core/error/failures.dart';
 import 'package:dartz/dartz.dart';
-import 'package:music_player/features/music/domain/repositories/music_reporitory.dart';
+import 'package:music_player/features/music/domain/repositories/music_repository.dart';
 
 class MusicRepositoryImpl extends MusicRepository {
   MusicLocalDataSource dataSource;

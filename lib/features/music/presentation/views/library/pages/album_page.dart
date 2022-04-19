@@ -33,8 +33,7 @@ class _AlbumPageState extends State<AlbumPage> {
           itemCount: state.albumList.length,
           itemBuilder: (context, index) {
             final album = state.albumList[index];
-            return AlbumWidget(
-                album: album.name, noOfSongs: album.noOfSongs.toString());
+            return AlbumWidget(album: album);
           },
         );
       },

@@ -12,7 +12,7 @@ import 'package:music_player/features/music/domain/entities/artist.dart' as _i9;
 import 'package:music_player/features/music/domain/entities/folder.dart'
     as _i13;
 import 'package:music_player/features/music/domain/entities/music.dart' as _i7;
-import 'package:music_player/features/music/domain/repositories/music_reporitory.dart'
+import 'package:music_player/features/music/domain/repositories/music_repository.dart'
     as _i2;
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_albums.dart'
     as _i10;

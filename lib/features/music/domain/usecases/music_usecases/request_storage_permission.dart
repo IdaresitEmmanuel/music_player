@@ -1,4 +1,4 @@
-import 'package:music_player/features/music/domain/repositories/music_reporitory.dart';
+import 'package:music_player/features/music/domain/repositories/music_repository.dart';
 
 class RequestStoragePermission {
   final MusicRepository repository;

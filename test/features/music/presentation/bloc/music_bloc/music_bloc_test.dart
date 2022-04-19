@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:music_player/core/error/failures.dart';
-import 'package:music_player/core/utility/helper_functions.dart';
+import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/album.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
@@ -65,7 +65,7 @@ void main() {
     MockGetAlbums getAlbums = MockGetAlbums();
     MockGetFolders getFolder = MockGetFolders();
     const List<Music> musicList = [
-      Music(title: '', artist: '', album: '', path: '')
+      Music(id: 1, title: 'title', path: 'path', data: 'data', size: 1)
     ];
     blocTest(
         'should emit a true loading state, list of music and false loading state',
@@ -199,7 +199,7 @@ void main() {
     MockGetAlbums getAlbums = MockGetAlbums();
     MockGetFolders getFolder = MockGetFolders();
     final List<Album> albumList = [
-      Album(name: '', noOfSongs: playListNoToString(1))
+      Album(id: 1, name: '', noOfSongs: playListNoToString(1))
     ];
     blocTest(
         'should emit a true loading state, list of album and false loading state',

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:music_player/core/error/failures.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
-import 'package:music_player/features/music/domain/repositories/music_reporitory.dart';
+import 'package:music_player/features/music/domain/repositories/music_repository.dart';
 
 class GetFolders {
   final MusicRepository repository;
