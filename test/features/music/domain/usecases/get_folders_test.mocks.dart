@@ -79,4 +79,8 @@ class MockMusicRepository extends _i1.Mock implements _i3.MusicRepository {
           returnValue: Future<_i2.Either<_i5.Failure, List<_i9.Folder>>>.value(
               _FakeEither_0<_i5.Failure, List<_i9.Folder>>())) as _i4
           .Future<_i2.Either<_i5.Failure, List<_i9.Folder>>>);
+  @override
+  _i4.Future<bool> requestStoragePermission() =>
+      (super.noSuchMethod(Invocation.method(#requestStoragePermission, []),
+          returnValue: Future<bool>.value(false)) as _i4.Future<bool>);
 }

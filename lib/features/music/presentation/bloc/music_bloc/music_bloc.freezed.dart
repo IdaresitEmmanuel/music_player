@@ -1,6 +1,5 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
 part of 'music_bloc.dart';
@@ -23,15 +22,23 @@ class _$MusicStateTearOff {
       required bool isArtistLoading,
       required bool isAlbumLoading,
       required bool isFolderLoading,
-      required Option<Either<Failure, List<Music>>> musicFailureOrSuccess,
-      required Option<Either<Failure, List<Artist>>> artistFailureOrSuccess,
-      required Option<Either<Failure, List<Album>>> albumFailureOrSuccess,
-      required Option<Either<Failure, List<Folder>>> folderFailureOrSuccess}) {
+      required List<Music> musicList,
+      required List<Artist> artistList,
+      required List<Album> albumList,
+      required List<Folder> folderList,
+      required Option<Either<Failure, Unit>> musicFailureOrSuccess,
+      required Option<Either<Failure, Unit>> artistFailureOrSuccess,
+      required Option<Either<Failure, Unit>> albumFailureOrSuccess,
+      required Option<Either<Failure, Unit>> folderFailureOrSuccess}) {
     return _MusicState(
       isMusicLoading: isMusicLoading,
       isArtistLoading: isArtistLoading,
       isAlbumLoading: isAlbumLoading,
       isFolderLoading: isFolderLoading,
+      musicList: musicList,
+      artistList: artistList,
+      albumList: albumList,
+      folderList: folderList,
       musicFailureOrSuccess: musicFailureOrSuccess,
       artistFailureOrSuccess: artistFailureOrSuccess,
       albumFailureOrSuccess: albumFailureOrSuccess,
@@ -49,13 +56,17 @@ mixin _$MusicState {
   bool get isArtistLoading => throw _privateConstructorUsedError;
   bool get isAlbumLoading => throw _privateConstructorUsedError;
   bool get isFolderLoading => throw _privateConstructorUsedError;
-  Option<Either<Failure, List<Music>>> get musicFailureOrSuccess =>
+  List<Music> get musicList => throw _privateConstructorUsedError;
+  List<Artist> get artistList => throw _privateConstructorUsedError;
+  List<Album> get albumList => throw _privateConstructorUsedError;
+  List<Folder> get folderList => throw _privateConstructorUsedError;
+  Option<Either<Failure, Unit>> get musicFailureOrSuccess =>
       throw _privateConstructorUsedError;
-  Option<Either<Failure, List<Artist>>> get artistFailureOrSuccess =>
+  Option<Either<Failure, Unit>> get artistFailureOrSuccess =>
       throw _privateConstructorUsedError;
-  Option<Either<Failure, List<Album>>> get albumFailureOrSuccess =>
+  Option<Either<Failure, Unit>> get albumFailureOrSuccess =>
       throw _privateConstructorUsedError;
-  Option<Either<Failure, List<Folder>>> get folderFailureOrSuccess =>
+  Option<Either<Failure, Unit>> get folderFailureOrSuccess =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -73,10 +84,14 @@ abstract class $MusicStateCopyWith<$Res> {
       bool isArtistLoading,
       bool isAlbumLoading,
       bool isFolderLoading,
-      Option<Either<Failure, List<Music>>> musicFailureOrSuccess,
-      Option<Either<Failure, List<Artist>>> artistFailureOrSuccess,
-      Option<Either<Failure, List<Album>>> albumFailureOrSuccess,
-      Option<Either<Failure, List<Folder>>> folderFailureOrSuccess});
+      List<Music> musicList,
+      List<Artist> artistList,
+      List<Album> albumList,
+      List<Folder> folderList,
+      Option<Either<Failure, Unit>> musicFailureOrSuccess,
+      Option<Either<Failure, Unit>> artistFailureOrSuccess,
+      Option<Either<Failure, Unit>> albumFailureOrSuccess,
+      Option<Either<Failure, Unit>> folderFailureOrSuccess});
 }
 
 /// @nodoc
@@ -93,6 +108,10 @@ class _$MusicStateCopyWithImpl<$Res> implements $MusicStateCopyWith<$Res> {
     Object? isArtistLoading = freezed,
     Object? isAlbumLoading = freezed,
     Object? isFolderLoading = freezed,
+    Object? musicList = freezed,
+    Object? artistList = freezed,
+    Object? albumList = freezed,
+    Object? folderList = freezed,
     Object? musicFailureOrSuccess = freezed,
     Object? artistFailureOrSuccess = freezed,
     Object? albumFailureOrSuccess = freezed,
@@ -115,22 +134,38 @@ class _$MusicStateCopyWithImpl<$Res> implements $MusicStateCopyWith<$Res> {
           ? _value.isFolderLoading
           : isFolderLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      musicList: musicList == freezed
+          ? _value.musicList
+          : musicList // ignore: cast_nullable_to_non_nullable
+              as List<Music>,
+      artistList: artistList == freezed
+          ? _value.artistList
+          : artistList // ignore: cast_nullable_to_non_nullable
+              as List<Artist>,
+      albumList: albumList == freezed
+          ? _value.albumList
+          : albumList // ignore: cast_nullable_to_non_nullable
+              as List<Album>,
+      folderList: folderList == freezed
+          ? _value.folderList
+          : folderList // ignore: cast_nullable_to_non_nullable
+              as List<Folder>,
       musicFailureOrSuccess: musicFailureOrSuccess == freezed
           ? _value.musicFailureOrSuccess
           : musicFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Music>>>,
+              as Option<Either<Failure, Unit>>,
       artistFailureOrSuccess: artistFailureOrSuccess == freezed
           ? _value.artistFailureOrSuccess
           : artistFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Artist>>>,
+              as Option<Either<Failure, Unit>>,
       albumFailureOrSuccess: albumFailureOrSuccess == freezed
           ? _value.albumFailureOrSuccess
           : albumFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Album>>>,
+              as Option<Either<Failure, Unit>>,
       folderFailureOrSuccess: folderFailureOrSuccess == freezed
           ? _value.folderFailureOrSuccess
           : folderFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Folder>>>,
+              as Option<Either<Failure, Unit>>,
     ));
   }
 }
@@ -146,10 +181,14 @@ abstract class _$MusicStateCopyWith<$Res> implements $MusicStateCopyWith<$Res> {
       bool isArtistLoading,
       bool isAlbumLoading,
       bool isFolderLoading,
-      Option<Either<Failure, List<Music>>> musicFailureOrSuccess,
-      Option<Either<Failure, List<Artist>>> artistFailureOrSuccess,
-      Option<Either<Failure, List<Album>>> albumFailureOrSuccess,
-      Option<Either<Failure, List<Folder>>> folderFailureOrSuccess});
+      List<Music> musicList,
+      List<Artist> artistList,
+      List<Album> albumList,
+      List<Folder> folderList,
+      Option<Either<Failure, Unit>> musicFailureOrSuccess,
+      Option<Either<Failure, Unit>> artistFailureOrSuccess,
+      Option<Either<Failure, Unit>> albumFailureOrSuccess,
+      Option<Either<Failure, Unit>> folderFailureOrSuccess});
 }
 
 /// @nodoc
@@ -168,6 +207,10 @@ class __$MusicStateCopyWithImpl<$Res> extends _$MusicStateCopyWithImpl<$Res>
     Object? isArtistLoading = freezed,
     Object? isAlbumLoading = freezed,
     Object? isFolderLoading = freezed,
+    Object? musicList = freezed,
+    Object? artistList = freezed,
+    Object? albumList = freezed,
+    Object? folderList = freezed,
     Object? musicFailureOrSuccess = freezed,
     Object? artistFailureOrSuccess = freezed,
     Object? albumFailureOrSuccess = freezed,
@@ -190,22 +233,38 @@ class __$MusicStateCopyWithImpl<$Res> extends _$MusicStateCopyWithImpl<$Res>
           ? _value.isFolderLoading
           : isFolderLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      musicList: musicList == freezed
+          ? _value.musicList
+          : musicList // ignore: cast_nullable_to_non_nullable
+              as List<Music>,
+      artistList: artistList == freezed
+          ? _value.artistList
+          : artistList // ignore: cast_nullable_to_non_nullable
+              as List<Artist>,
+      albumList: albumList == freezed
+          ? _value.albumList
+          : albumList // ignore: cast_nullable_to_non_nullable
+              as List<Album>,
+      folderList: folderList == freezed
+          ? _value.folderList
+          : folderList // ignore: cast_nullable_to_non_nullable
+              as List<Folder>,
       musicFailureOrSuccess: musicFailureOrSuccess == freezed
           ? _value.musicFailureOrSuccess
           : musicFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Music>>>,
+              as Option<Either<Failure, Unit>>,
       artistFailureOrSuccess: artistFailureOrSuccess == freezed
           ? _value.artistFailureOrSuccess
           : artistFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Artist>>>,
+              as Option<Either<Failure, Unit>>,
       albumFailureOrSuccess: albumFailureOrSuccess == freezed
           ? _value.albumFailureOrSuccess
           : albumFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Album>>>,
+              as Option<Either<Failure, Unit>>,
       folderFailureOrSuccess: folderFailureOrSuccess == freezed
           ? _value.folderFailureOrSuccess
           : folderFailureOrSuccess // ignore: cast_nullable_to_non_nullable
-              as Option<Either<Failure, List<Folder>>>,
+              as Option<Either<Failure, Unit>>,
     ));
   }
 }
@@ -218,6 +277,10 @@ class _$_MusicState implements _MusicState {
       required this.isArtistLoading,
       required this.isAlbumLoading,
       required this.isFolderLoading,
+      required this.musicList,
+      required this.artistList,
+      required this.albumList,
+      required this.folderList,
       required this.musicFailureOrSuccess,
       required this.artistFailureOrSuccess,
       required this.albumFailureOrSuccess,
@@ -232,17 +295,25 @@ class _$_MusicState implements _MusicState {
   @override
   final bool isFolderLoading;
   @override
-  final Option<Either<Failure, List<Music>>> musicFailureOrSuccess;
+  final List<Music> musicList;
   @override
-  final Option<Either<Failure, List<Artist>>> artistFailureOrSuccess;
+  final List<Artist> artistList;
   @override
-  final Option<Either<Failure, List<Album>>> albumFailureOrSuccess;
+  final List<Album> albumList;
   @override
-  final Option<Either<Failure, List<Folder>>> folderFailureOrSuccess;
+  final List<Folder> folderList;
+  @override
+  final Option<Either<Failure, Unit>> musicFailureOrSuccess;
+  @override
+  final Option<Either<Failure, Unit>> artistFailureOrSuccess;
+  @override
+  final Option<Either<Failure, Unit>> albumFailureOrSuccess;
+  @override
+  final Option<Either<Failure, Unit>> folderFailureOrSuccess;
 
   @override
   String toString() {
-    return 'MusicState(isMusicLoading: $isMusicLoading, isArtistLoading: $isArtistLoading, isAlbumLoading: $isAlbumLoading, isFolderLoading: $isFolderLoading, musicFailureOrSuccess: $musicFailureOrSuccess, artistFailureOrSuccess: $artistFailureOrSuccess, albumFailureOrSuccess: $albumFailureOrSuccess, folderFailureOrSuccess: $folderFailureOrSuccess)';
+    return 'MusicState(isMusicLoading: $isMusicLoading, isArtistLoading: $isArtistLoading, isAlbumLoading: $isAlbumLoading, isFolderLoading: $isFolderLoading, musicList: $musicList, artistList: $artistList, albumList: $albumList, folderList: $folderList, musicFailureOrSuccess: $musicFailureOrSuccess, artistFailureOrSuccess: $artistFailureOrSuccess, albumFailureOrSuccess: $albumFailureOrSuccess, folderFailureOrSuccess: $folderFailureOrSuccess)';
   }
 
   @override
@@ -258,6 +329,12 @@ class _$_MusicState implements _MusicState {
                 .equals(other.isAlbumLoading, isAlbumLoading) &&
             const DeepCollectionEquality()
                 .equals(other.isFolderLoading, isFolderLoading) &&
+            const DeepCollectionEquality().equals(other.musicList, musicList) &&
+            const DeepCollectionEquality()
+                .equals(other.artistList, artistList) &&
+            const DeepCollectionEquality().equals(other.albumList, albumList) &&
+            const DeepCollectionEquality()
+                .equals(other.folderList, folderList) &&
             const DeepCollectionEquality()
                 .equals(other.musicFailureOrSuccess, musicFailureOrSuccess) &&
             const DeepCollectionEquality()
@@ -275,6 +352,10 @@ class _$_MusicState implements _MusicState {
       const DeepCollectionEquality().hash(isArtistLoading),
       const DeepCollectionEquality().hash(isAlbumLoading),
       const DeepCollectionEquality().hash(isFolderLoading),
+      const DeepCollectionEquality().hash(musicList),
+      const DeepCollectionEquality().hash(artistList),
+      const DeepCollectionEquality().hash(albumList),
+      const DeepCollectionEquality().hash(folderList),
       const DeepCollectionEquality().hash(musicFailureOrSuccess),
       const DeepCollectionEquality().hash(artistFailureOrSuccess),
       const DeepCollectionEquality().hash(albumFailureOrSuccess),
@@ -288,15 +369,19 @@ class _$_MusicState implements _MusicState {
 
 abstract class _MusicState implements MusicState {
   const factory _MusicState(
-      {required bool isMusicLoading,
-      required bool isArtistLoading,
-      required bool isAlbumLoading,
-      required bool isFolderLoading,
-      required Option<Either<Failure, List<Music>>> musicFailureOrSuccess,
-      required Option<Either<Failure, List<Artist>>> artistFailureOrSuccess,
-      required Option<Either<Failure, List<Album>>> albumFailureOrSuccess,
-      required Option<Either<Failure, List<Folder>>>
-          folderFailureOrSuccess}) = _$_MusicState;
+          {required bool isMusicLoading,
+          required bool isArtistLoading,
+          required bool isAlbumLoading,
+          required bool isFolderLoading,
+          required List<Music> musicList,
+          required List<Artist> artistList,
+          required List<Album> albumList,
+          required List<Folder> folderList,
+          required Option<Either<Failure, Unit>> musicFailureOrSuccess,
+          required Option<Either<Failure, Unit>> artistFailureOrSuccess,
+          required Option<Either<Failure, Unit>> albumFailureOrSuccess,
+          required Option<Either<Failure, Unit>> folderFailureOrSuccess}) =
+      _$_MusicState;
 
   @override
   bool get isMusicLoading;
@@ -307,13 +392,21 @@ abstract class _MusicState implements MusicState {
   @override
   bool get isFolderLoading;
   @override
-  Option<Either<Failure, List<Music>>> get musicFailureOrSuccess;
+  List<Music> get musicList;
   @override
-  Option<Either<Failure, List<Artist>>> get artistFailureOrSuccess;
+  List<Artist> get artistList;
   @override
-  Option<Either<Failure, List<Album>>> get albumFailureOrSuccess;
+  List<Album> get albumList;
   @override
-  Option<Either<Failure, List<Folder>>> get folderFailureOrSuccess;
+  List<Folder> get folderList;
+  @override
+  Option<Either<Failure, Unit>> get musicFailureOrSuccess;
+  @override
+  Option<Either<Failure, Unit>> get artistFailureOrSuccess;
+  @override
+  Option<Either<Failure, Unit>> get albumFailureOrSuccess;
+  @override
+  Option<Either<Failure, Unit>> get folderFailureOrSuccess;
   @override
   @JsonKey(ignore: true)
   _$MusicStateCopyWith<_MusicState> get copyWith =>

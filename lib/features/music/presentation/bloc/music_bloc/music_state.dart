@@ -7,10 +7,14 @@ abstract class MusicState with _$MusicState {
     required bool isArtistLoading,
     required bool isAlbumLoading,
     required bool isFolderLoading,
-    required Option<Either<Failure, List<Music>>> musicFailureOrSuccess,
-    required Option<Either<Failure, List<Artist>>> artistFailureOrSuccess,
-    required Option<Either<Failure, List<Album>>> albumFailureOrSuccess,
-    required Option<Either<Failure, List<Folder>>> folderFailureOrSuccess,
+    required List<Music> musicList,
+    required List<Artist> artistList,
+    required List<Album> albumList,
+    required List<Folder> folderList,
+    required Option<Either<Failure, Unit>> musicFailureOrSuccess,
+    required Option<Either<Failure, Unit>> artistFailureOrSuccess,
+    required Option<Either<Failure, Unit>> albumFailureOrSuccess,
+    required Option<Either<Failure, Unit>> folderFailureOrSuccess,
   }) = _MusicState;
 
   factory MusicState.initial() => MusicState(
@@ -21,5 +25,9 @@ abstract class MusicState with _$MusicState {
       musicFailureOrSuccess: none(),
       artistFailureOrSuccess: none(),
       albumFailureOrSuccess: none(),
-      folderFailureOrSuccess: none());
+      folderFailureOrSuccess: none(),
+      albumList: [],
+      artistList: [],
+      folderList: [],
+      musicList: []);
 }

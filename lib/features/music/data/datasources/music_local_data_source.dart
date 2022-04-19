@@ -53,9 +53,9 @@ class MusicLocalDataSourceImpl extends MusicLocalDataSource {
         .onError((error, stackTrace) => throw SystemException());
     final tempAlbumList = <AlbumsModel>[];
     for (var album in albumList) {
-      final albumsModel =
-          AlbumsModel(name: album.album, noOfSongs: album.numOfSongs);
-      if (albumsModel.noOfSongs != 0) {
+      final albumsModel = AlbumsModel(
+          name: album.album, noOfSongs: playListNoToString(album.numOfSongs));
+      if (album.numOfSongs != 0) {
         tempAlbumList.add(albumsModel);
       }
     }
@@ -87,8 +87,9 @@ class MusicLocalDataSourceImpl extends MusicLocalDataSource {
     final tempArtistList = <ArtistsModel>[];
     for (var artist in artistList) {
       final artistsModel = ArtistsModel(
-          name: artist.artist, noOfSongs: artist.numberOfTracks ?? 0);
-      if (artistsModel.noOfSongs != 0) {
+          name: artist.artist,
+          noOfSongs: playListNoToString(artist.numberOfTracks ?? 0));
+      if (artist.numberOfTracks != 0) {
         tempArtistList.add(artistsModel);
       }
     }
@@ -121,7 +122,8 @@ class MusicLocalDataSourceImpl extends MusicLocalDataSource {
         }
       }
       if (noOfSongs != 0) {
-        final folder = FolderModel(name: folderName, noOfSongs: noOfSongs);
+        final folder = FolderModel(
+            name: folderName, noOfSongs: playListNoToString(noOfSongs));
         folderList.add(folder);
       }
     }

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -6,10 +8,11 @@ import 'package:music_player/features/music/domain/entities/album.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
-import 'package:music_player/features/music/domain/usecases/get_albums.dart';
-import 'package:music_player/features/music/domain/usecases/get_all_music.dart';
-import 'package:music_player/features/music/domain/usecases/get_folders.dart';
-import 'package:music_player/features/music/domain/usecases/get_artists.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_albums.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_all_music.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_folders.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_artists.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/request_storage_permission.dart';
 
 part 'music_event.dart';
 part 'music_state.dart';
@@ -20,13 +23,24 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
   final GetArtists getArtist;
   final GetAlbums getAlbums;
   final GetFolders getFolder;
+  final RequestStoragePermission requestStoragePermission;
 
   MusicBloc(
       {required this.getAllMusic,
       required this.getArtist,
       required this.getAlbums,
-      required this.getFolder})
+      required this.getFolder,
+      required this.requestStoragePermission})
       : super(MusicState.initial()) {
+    on<StartEvent>((event, emit) async {
+      if (await requestStoragePermission()) {
+        add(GetMusicEvent());
+        add(GetAlbumEvent());
+        add(GetArtistEvent());
+        add(GetFolderEvent());
+      }
+    });
+
     on<GetMusicEvent>((event, emit) async {
       emit(state.copyWith(isMusicLoading: true));
       final result = await getAllMusic();
@@ -34,7 +48,9 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
         (l) => emit(state.copyWith(
             isMusicLoading: false, musicFailureOrSuccess: some(left(l)))),
         (r) => emit(state.copyWith(
-            isMusicLoading: false, musicFailureOrSuccess: some(right(r)))),
+            isMusicLoading: false,
+            musicList: r,
+            musicFailureOrSuccess: some(right(unit)))),
       );
     });
 
@@ -45,7 +61,9 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
         (l) => emit(state.copyWith(
             isArtistLoading: false, artistFailureOrSuccess: some(left(l)))),
         (r) => emit(state.copyWith(
-            isArtistLoading: false, artistFailureOrSuccess: some(right(r)))),
+            isArtistLoading: false,
+            artistList: r,
+            artistFailureOrSuccess: some(right(unit)))),
       );
     });
 
@@ -56,7 +74,9 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
         (l) => emit(state.copyWith(
             isAlbumLoading: false, albumFailureOrSuccess: some(left(l)))),
         (r) => emit(state.copyWith(
-            isAlbumLoading: false, albumFailureOrSuccess: some(right(r)))),
+            isAlbumLoading: false,
+            albumList: r,
+            albumFailureOrSuccess: some(right(unit)))),
       );
     });
 
@@ -67,7 +87,14 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
           (l) => emit(state.copyWith(
               isFolderLoading: false, folderFailureOrSuccess: some(left(l)))),
           (r) => emit(state.copyWith(
-              isFolderLoading: false, folderFailureOrSuccess: some(right(r)))));
+              isFolderLoading: false,
+              folderList: r,
+              folderFailureOrSuccess: some(right(unit)))));
+    });
+
+    on<RequestStoragePermissionEvent>((event, emit) async {
+      final result = await requestStoragePermission();
+      log("storage permission status: $result");
     });
   }
 }

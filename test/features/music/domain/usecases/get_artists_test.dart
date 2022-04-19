@@ -2,9 +2,10 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:music_player/core/utility/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/repositories/music_reporitory.dart';
-import 'package:music_player/features/music/domain/usecases/get_artists.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_artists.dart';
 
 import 'get_artists_test.mocks.dart';
 
@@ -14,7 +15,8 @@ void main() {
   GetArtists usecase = GetArtists(mockMusicRepo);
 
   test('should return a list of artist entities', () async {
-    const artist = Artist(name: 'Artist name', noOfSongs: 3);
+    final artist =
+        Artist(name: 'Artist name', noOfSongs: playListNoToString(4));
     List<Artist> artistList = [artist];
 
     when(mockMusicRepo.getArtists()).thenAnswer((_) async => Right(artistList));

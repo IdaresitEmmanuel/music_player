@@ -104,4 +104,13 @@ class MusicRepositoryImpl extends MusicRepository {
       return Left(StoragePermissionFailure());
     }
   }
+
+  @override
+  Future<bool> requestStoragePermission() async {
+    try {
+      return await storagePermissionInfo.requestStoragePermission();
+    } catch (e) {
+      return false;
+    }
+  }
 }

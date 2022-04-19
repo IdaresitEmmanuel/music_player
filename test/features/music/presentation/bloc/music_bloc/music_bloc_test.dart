@@ -3,34 +3,60 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:music_player/core/error/failures.dart';
+import 'package:music_player/core/utility/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/album.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
-import 'package:music_player/features/music/domain/usecases/get_albums.dart';
-import 'package:music_player/features/music/domain/usecases/get_all_music.dart';
-import 'package:music_player/features/music/domain/usecases/get_artists.dart';
-import 'package:music_player/features/music/domain/usecases/get_folders.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_albums.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_all_music.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_artists.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_folders.dart';
 import 'package:mockito/mockito.dart';
-import 'package:music_player/features/music/presentation/bloc/music_bloc.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/request_storage_permission.dart';
+import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart';
 
 import 'music_bloc_test.mocks.dart';
 
-@GenerateMocks([GetAllMusic, GetArtists, GetAlbums, GetFolders])
+@GenerateMocks(
+    [GetAllMusic, GetArtists, GetAlbums, GetFolders, RequestStoragePermission])
 void main() {
   MockGetAllMusic getAllMusic = MockGetAllMusic();
   MockGetArtists getArtist = MockGetArtists();
   MockGetAlbums getAlbums = MockGetAlbums();
   MockGetFolders getFolder = MockGetFolders();
+  MockRequestStoragePermission requestStoragePermission =
+      MockRequestStoragePermission();
 
   test('musicBloc first state should be the initial state', () async {
     MusicBloc musicBloc = MusicBloc(
         getAllMusic: getAllMusic,
         getArtist: getArtist,
         getAlbums: getAlbums,
-        getFolder: getFolder);
+        getFolder: getFolder,
+        requestStoragePermission: requestStoragePermission);
     expect(musicBloc.state, MusicState.initial());
   });
+
+  // test for requestStoragePermissionEvent
+  group(
+    'request permission',
+    () {
+      blocTest("should request for permission", build: () {
+        return MusicBloc(
+            getAllMusic: getAllMusic,
+            getArtist: getArtist,
+            getAlbums: getAlbums,
+            getFolder: getFolder,
+            requestStoragePermission: requestStoragePermission);
+      }, act: (MusicBloc musicBloc) {
+        when(requestStoragePermission()).thenAnswer((_) async => true);
+        musicBloc.add(RequestStoragePermissionEvent());
+      }, verify: (MusicBloc musicBloc) {
+        verify(requestStoragePermission());
+      });
+    },
+  );
 
   // tests for getAllMusicEvent
   group('getAllMusicEvent test', () {
@@ -48,7 +74,8 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
           when(getAllMusic()).thenAnswer((_) async => const Right(musicList));
           return musicBloc;
@@ -60,8 +87,9 @@ void main() {
               MusicState.initial().copyWith(isMusicLoading: true),
               MusicState.initial().copyWith(
                   isMusicLoading: false,
+                  musicList: musicList,
                   musicFailureOrSuccess: some(
-                    const Right(musicList),
+                    const Right(unit),
                   ))
             ],
         verify: (MusicBloc musicBloc) {
@@ -75,7 +103,8 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
           when(getAllMusic()).thenAnswer((_) async => Left(SystemFailure()));
           return musicBloc;
@@ -102,7 +131,9 @@ void main() {
     MockGetArtists getArtist = MockGetArtists();
     MockGetAlbums getAlbums = MockGetAlbums();
     MockGetFolders getFolder = MockGetFolders();
-    const List<Artist> artistList = [Artist(name: '', noOfSongs: 1)];
+    final List<Artist> artistList = [
+      Artist(name: '', noOfSongs: playListNoToString(1))
+    ];
     blocTest(
         'should emit a true loading state, list of artist and false loading state',
         build: () {
@@ -110,9 +141,10 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
-          when(getArtist()).thenAnswer((_) async => const Right(artistList));
+          when(getArtist()).thenAnswer((_) async => Right(artistList));
           return musicBloc;
         },
         act: (MusicBloc musicBloc) {
@@ -122,8 +154,9 @@ void main() {
               MusicState.initial().copyWith(isArtistLoading: true),
               MusicState.initial().copyWith(
                   isArtistLoading: false,
+                  artistList: artistList,
                   artistFailureOrSuccess: some(
-                    const Right(artistList),
+                    const Right(unit),
                   ))
             ],
         verify: (MusicBloc musicBloc) {
@@ -137,7 +170,8 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
           when(getArtist()).thenAnswer((_) async => Left(SystemFailure()));
           return musicBloc;
@@ -164,7 +198,9 @@ void main() {
     MockGetArtists getArtist = MockGetArtists();
     MockGetAlbums getAlbums = MockGetAlbums();
     MockGetFolders getFolder = MockGetFolders();
-    const List<Album> albumList = [Album(name: '', noOfSongs: 1)];
+    final List<Album> albumList = [
+      Album(name: '', noOfSongs: playListNoToString(1))
+    ];
     blocTest(
         'should emit a true loading state, list of album and false loading state',
         build: () {
@@ -172,9 +208,10 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
-          when(getAlbums()).thenAnswer((_) async => const Right(albumList));
+          when(getAlbums()).thenAnswer((_) async => Right(albumList));
           return musicBloc;
         },
         act: (MusicBloc musicBloc) {
@@ -184,8 +221,9 @@ void main() {
               MusicState.initial().copyWith(isAlbumLoading: true),
               MusicState.initial().copyWith(
                   isArtistLoading: false,
+                  albumList: albumList,
                   albumFailureOrSuccess: some(
-                    const Right(albumList),
+                    const Right(unit),
                   ))
             ],
         verify: (MusicBloc musicBloc) {
@@ -199,7 +237,8 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
           when(getAlbums()).thenAnswer((_) async => Left(SystemFailure()));
           return musicBloc;
@@ -226,7 +265,9 @@ void main() {
     MockGetArtists getArtist = MockGetArtists();
     MockGetAlbums getAlbums = MockGetAlbums();
     MockGetFolders getFolder = MockGetFolders();
-    const List<Folder> folderList = [Folder(name: '', noOfSongs: 1)];
+    final List<Folder> folderList = [
+      Folder(name: '', noOfSongs: playListNoToString(1))
+    ];
     blocTest(
         'should emit a true loading state, list of folder and false loading state',
         build: () {
@@ -234,9 +275,10 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
-          when(getFolder()).thenAnswer((_) async => const Right(folderList));
+          when(getFolder()).thenAnswer((_) async => Right(folderList));
           return musicBloc;
         },
         act: (MusicBloc musicBloc) {
@@ -246,8 +288,9 @@ void main() {
               MusicState.initial().copyWith(isFolderLoading: true),
               MusicState.initial().copyWith(
                   isFolderLoading: false,
+                  folderList: folderList,
                   folderFailureOrSuccess: some(
-                    const Right(folderList),
+                    const Right(unit),
                   ))
             ],
         verify: (MusicBloc musicBloc) {
@@ -261,7 +304,8 @@ void main() {
               getAllMusic: getAllMusic,
               getArtist: getArtist,
               getAlbums: getAlbums,
-              getFolder: getFolder);
+              getFolder: getFolder,
+              requestStoragePermission: requestStoragePermission);
 
           when(getFolder()).thenAnswer((_) async => Left(SystemFailure()));
           return musicBloc;

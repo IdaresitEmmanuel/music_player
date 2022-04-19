@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Album extends Equatable {
   final String name;
-  final int noOfSongs;
+  final String noOfSongs;
 
   const Album({required this.name, required this.noOfSongs});
 

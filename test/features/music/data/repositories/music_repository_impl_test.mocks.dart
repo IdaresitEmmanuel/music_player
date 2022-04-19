@@ -170,6 +170,10 @@ class MockMusicRepositoryImpl extends _i1.Mock
           returnValue: Future<_i4.Either<_i11.Failure, List<_i13.Music>>>.value(
               _FakeEither_2<_i11.Failure, List<_i13.Music>>())) as _i5
           .Future<_i4.Either<_i11.Failure, List<_i13.Music>>>);
+  @override
+  _i5.Future<bool> requestStoragePermission() =>
+      (super.noSuchMethod(Invocation.method(#requestStoragePermission, []),
+          returnValue: Future<bool>.value(false)) as _i5.Future<bool>);
 }
 
 /// A class which mocks [StoragePermissionInfo].

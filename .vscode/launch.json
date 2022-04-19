@@ -5,12 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Dart: Run all Tests",
-            "type": "dart",
-            "request": "launch",
-            "program": "./test/"
-        },
-        {
             "name": "music_player",
             "request": "launch",
             "type": "dart"
@@ -26,6 +20,12 @@
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
-        }
+        },
+        // {
+        //     "name": "Dart: Run all Tests",
+        //     "type": "dart",
+        //     "request": "launch",
+        //     "program": "./test/"
+        // },
     ]
 }

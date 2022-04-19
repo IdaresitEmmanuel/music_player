@@ -13,4 +13,5 @@ abstract class MusicRepository {
   Future<Either<Failure, List<Artist>>> getArtists();
   Future<Either<Failure, List<Album>>> getAlbums();
   Future<Either<Failure, List<Folder>>> getFolders();
+  Future<bool> requestStoragePermission();
 }

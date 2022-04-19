@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class Folder extends Equatable {
   final String name;
-  final int noOfSongs;
+  final String noOfSongs;
 
   const Folder({required this.name, required this.noOfSongs});
 

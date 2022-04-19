@@ -51,7 +51,8 @@ void main() {
     final tempArtistsList = <ArtistsModel>[];
     for (var artist in artistList) {
       final artistModel = ArtistsModel(
-          name: artist.artist, noOfSongs: artist.numberOfTracks ?? 0);
+          name: artist.artist,
+          noOfSongs: playListNoToString(artist.numberOfTracks ?? 0));
       tempArtistsList.add(artistModel);
     }
     when(mockOnAudioQuery.queryArtists()).thenAnswer((_) async => artistList);
@@ -68,8 +69,8 @@ void main() {
     List<AlbumModel> albumList = [album];
     final tempAlbumList = <AlbumsModel>[];
     for (var album in albumList) {
-      final albumsModel =
-          AlbumsModel(name: album.album, noOfSongs: album.numOfSongs);
+      final albumsModel = AlbumsModel(
+          name: album.album, noOfSongs: playListNoToString(album.numOfSongs));
       tempAlbumList.add(albumsModel);
     }
     when(mockOnAudioQuery.queryAlbums()).thenAnswer((_) async => albumList);
@@ -91,7 +92,7 @@ void main() {
     final folderList = <FolderModel>[];
     final folderModel = FolderModel(
       name: getFolderName(song.data),
-      noOfSongs: 1,
+      noOfSongs: playListNoToString(1),
     );
     folderList.add(folderModel);
 
