@@ -17,7 +17,9 @@ class SongWidget extends StatelessWidget {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(6.0)),
         child: FutureBuilder(
-            future: getArtWork(song.albumId!),
+            future: song.albumId != null
+                ? getArtWork(song.albumId!)
+                : Future.value(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ClipRRect(
