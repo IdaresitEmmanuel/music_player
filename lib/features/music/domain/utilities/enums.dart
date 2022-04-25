@@ -3,3 +3,10 @@ enum ThemeSetting {
   light,
   dark,
 }
+
+enum PlaylistType {
+  artist,
+  album,
+  folder,
+// userPlaylist
+}

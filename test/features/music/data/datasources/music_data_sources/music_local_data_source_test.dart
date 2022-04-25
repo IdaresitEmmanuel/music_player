@@ -63,7 +63,7 @@ void main() {
 
   // test to retrieve album list
   test('should return a list of albums models', () async {
-    AlbumModel album = AlbumModel({"album": 'album', "numsongs": 4});
+    AlbumModel album = AlbumModel({"_id": 1, "album": 'album', "numsongs": 4});
 
     List<AlbumModel> albumList = [album];
     final tempAlbumList = <AlbumsModel>[];

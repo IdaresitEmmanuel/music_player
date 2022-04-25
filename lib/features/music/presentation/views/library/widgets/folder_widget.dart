@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/features/music/domain/utilities/enums.dart';
+
+import '../../playlist/playlist.dart';
 
 class FolderWidget extends StatelessWidget {
   const FolderWidget({Key? key, required this.folder, required this.noOfSongs})
@@ -8,6 +11,11 @@ class FolderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Playlist(
+                playlistName: folder,
+                playlistType: PlaylistType.folder,
+              ))),
       leading: Icon(
         Icons.folder_rounded,
         color: Theme.of(context).cardColor,

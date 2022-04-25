@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:music_player/features/music/domain/utilities/enums.dart';
 import 'package:music_player/features/music/presentation/views/playlist/playlist.dart';
 
 class ArtistWidget extends StatelessWidget {
@@ -9,8 +10,11 @@ class ArtistWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => Navigator.of(context)
-          .push(MaterialPageRoute(builder: (_) => const Playlist())),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Playlist(
+                playlistName: artist,
+                playlistType: PlaylistType.artist,
+              ))),
       leading: Container(
         height: 60,
         width: 60,

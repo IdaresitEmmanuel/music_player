@@ -2,7 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:music_player/features/music/domain/entities/album.dart';
+import 'package:music_player/features/music/domain/utilities/enums.dart';
 import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/features/music/presentation/views/playlist/playlist.dart';
 
 class AlbumWidget extends StatelessWidget {
   const AlbumWidget({Key? key, required this.album}) : super(key: key);
@@ -10,6 +12,11 @@ class AlbumWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+          builder: (_) => Playlist(
+                playlistName: album.name,
+                playlistType: PlaylistType.album,
+              ))),
       leading: Container(
         height: 60,
         width: 60,

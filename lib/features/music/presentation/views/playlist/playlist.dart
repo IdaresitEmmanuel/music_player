@@ -1,19 +1,35 @@
+import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart';
+import 'package:marquee/marquee.dart';
+import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/features/music/presentation/bloc/playlist_bloc/playlist_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/library/widgets/song_widget.dart';
 
 import '../../core/theme/colors.dart';
 
 class Playlist extends StatefulWidget {
-  const Playlist({Key? key}) : super(key: key);
+  const Playlist(
+      {Key? key, required this.playlistType, required this.playlistName})
+      : super(key: key);
+
+  final PlaylistType playlistType;
+  final String playlistName;
 
   @override
   State<Playlist> createState() => _PlaylistState();
 }
 
 class _PlaylistState extends State<Playlist> {
+  @override
+  void initState() {
+    context.read<PlaylistBloc>().add(
+        GetPlaylistEvent(type: widget.playlistType, name: widget.playlistName));
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,42 +42,67 @@ class _PlaylistState extends State<Playlist> {
             snap: false,
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            flexibleSpace: Stack(
-              children: [
-                Container(
-                  width: double.maxFinite,
-                  height: double.maxFinite,
-                  color: Colors.deepOrange,
-                ),
-                FlexibleSpaceBar(
-                  background: Container(
-                    height: 220.0,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: AppDimentions.pageMargin),
-                    child: Row(children: [
-                      Container(
-                        height: 80.0,
-                        width: 80.0,
-                        color: Colors.blue,
+            flexibleSpace: BlocBuilder<PlaylistBloc, PlaylistState>(
+              builder: (playlistContext, state) {
+                return Stack(
+                  children: [
+                    Container(
+                      width: double.maxFinite,
+                      height: double.maxFinite,
+                      color: Colors.black.withOpacity(.4),
+                      child: Builder(builder: (context) {
+                        Widget tempWidget = Container();
+                        if (state.image.isSome()) {
+                          state.image.map((a) {
+                            tempWidget = Image.memory(a)
+                                .blurred(blur: 20, blurColor: Colors.black);
+                          });
+                        }
+                        return tempWidget;
+                      }),
+                    ),
+                    FlexibleSpaceBar(
+                      background: Container(
+                        height: 220.0,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: AppDimentions.pageMargin),
+                        child: Row(children: [
+                          SizedBox(
+                            height: 80.0,
+                            width: 80.0,
+                            child: AlbumThumbnail(
+                                playlistType: widget.playlistType),
+                          ),
+                          const SizedBox(width: 20.0),
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20.0,
+                                  child: Marquee(
+                                      pauseAfterRound:
+                                          const Duration(seconds: 5),
+                                      blankSpace: 20.0,
+                                      text: widget.playlistName,
+                                      style: const TextStyle(
+                                          fontSize: 20.0, color: Colors.white)),
+                                ),
+                                const SizedBox(height: 10.0),
+                                Text(playListNoToString(state.musicList.length),
+                                    style: const TextStyle(color: Colors.white),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis),
+                              ],
+                            ),
+                          )
+                        ]),
                       ),
-                      const SizedBox(width: 20.0),
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text("Album text",
-                              style: TextStyle(
-                                  fontSize: 20.0, color: Colors.white)),
-                          Text("15 Songs",
-                              style: TextStyle(color: Colors.white)),
-                          Text("1:30:25",
-                              style: TextStyle(color: Colors.white)),
-                        ],
-                      )
-                    ]),
-                  ),
-                ),
-              ],
+                    ),
+                  ],
+                );
+              },
             ),
             bottom: PreferredSize(
               preferredSize: const Size.fromHeight(0),
@@ -102,19 +143,58 @@ class _PlaylistState extends State<Playlist> {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                final music = context.read<MusicBloc>().state.musicList[index];
-                return Container(
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    child: SongWidget(song: music));
-              },
-              childCount: context.read<MusicBloc>().state.musicList.length,
-            ),
+          BlocBuilder<PlaylistBloc, PlaylistState>(
+            builder: (playlistContext, state) {
+              return SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    final music = state.musicList[index];
+                    return Container(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        child: SongWidget(song: music));
+                  },
+                  childCount: state.musicList.length,
+                ),
+              );
+            },
           )
         ])
       ]),
     );
+  }
+}
+
+class AlbumThumbnail extends StatelessWidget {
+  const AlbumThumbnail({Key? key, required this.playlistType})
+      : super(key: key);
+  final PlaylistType playlistType;
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<PlaylistBloc, PlaylistState>(builder: (context, state) {
+      Widget tempWidget = Container();
+      if (state.image.isSome()) {
+        state.image.map((a) {
+          tempWidget = ClipRRect(
+            child: Image.memory(a),
+            borderRadius: BorderRadius.circular(6.0),
+          );
+        });
+      } else {
+        switch (playlistType) {
+          case PlaylistType.artist:
+            tempWidget =
+                const Icon(Icons.person, size: 80, color: Colors.white);
+            break;
+          case PlaylistType.album:
+            tempWidget = const Icon(Icons.album, size: 80, color: Colors.white);
+            break;
+          case PlaylistType.folder:
+            tempWidget =
+                const Icon(Icons.folder, size: 80, color: Colors.white);
+            break;
+        }
+      }
+      return tempWidget;
+    });
   }
 }

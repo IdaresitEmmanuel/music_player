@@ -6,6 +6,7 @@ import 'package:music_player/features/music/data/repositories/music_repository_i
 import 'package:music_player/features/music/data/repositories/settings_repository_impl.dart';
 import 'package:music_player/features/music/domain/repositories/music_repository.dart';
 import 'package:music_player/features/music/domain/repositories/settings_repository.dart';
+import 'package:music_player/features/music/domain/usecases/music_usecases/get_album_art.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_albums.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_all_music.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_artists.dart';
@@ -17,6 +18,7 @@ import 'package:music_player/features/music/domain/usecases/music_usecases/reque
 import 'package:music_player/features/music/domain/usecases/settings_usecases/get_theme.dart';
 import 'package:music_player/features/music/domain/usecases/settings_usecases/set_theme.dart';
 import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart';
+import 'package:music_player/features/music/presentation/bloc/playlist_bloc/playlist_bloc.dart';
 import 'package:music_player/features/music/presentation/bloc/settings_bloc/settings_bloc.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -34,6 +36,14 @@ Future<void> init() async {
       getFolder: sl(),
       requestStoragePermission: sl()));
 
+  // playlist_bloc
+  sl.registerFactory(() => PlaylistBloc(
+      requestStoragePermission: sl(),
+      getMusicByArtist: sl(),
+      getMusicByAlbum: sl(),
+      getMusicByFolder: sl(),
+      getAlbumArt: sl()));
+
   // settings_bloc
   sl.registerFactory(() => SettingsBloc(getTheme: sl(), setTheme: sl()));
 
@@ -44,10 +54,13 @@ Future<void> init() async {
   sl.registerLazySingleton(() => GetAllMusic(sl()));
   sl.registerLazySingleton(() => GetArtists(sl()));
   sl.registerLazySingleton(() => GetFolders(sl()));
+  sl.registerLazySingleton(() => RequestStoragePermission(sl()));
+
+  // playlist usecases (under music umbrella)
   sl.registerLazySingleton(() => GetMusicByAlbum(sl()));
   sl.registerLazySingleton(() => GetMusicByArtist(sl()));
   sl.registerLazySingleton(() => GetMusicByFolder(sl()));
-  sl.registerLazySingleton(() => RequestStoragePermission(sl()));
+  sl.registerLazySingleton(() => GetAlbumArt(sl()));
 
   // settings usecases
   sl.registerLazySingleton(() => GetTheme(sl()));
