@@ -10,3 +10,11 @@ enum PlaylistType {
   folder,
 // userPlaylist
 }
+
+enum SearchCategory {
+  key,
+  songs,
+  aritst,
+  album,
+  folder,
+}

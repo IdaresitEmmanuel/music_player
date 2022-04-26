@@ -4,10 +4,15 @@ import 'package:music_player/features/music/domain/utilities/enums.dart';
 import '../../playlist/playlist.dart';
 
 class FolderWidget extends StatelessWidget {
-  const FolderWidget({Key? key, required this.folder, required this.noOfSongs})
+  const FolderWidget(
+      {Key? key,
+      required this.folder,
+      required this.noOfSongs,
+      this.showMenu = true})
       : super(key: key);
   final String folder;
   final String noOfSongs;
+  final bool showMenu;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -23,7 +28,9 @@ class FolderWidget extends StatelessWidget {
       ),
       title: Text(folder),
       subtitle: Text(noOfSongs),
-      trailing: const Icon(Icons.more_vert_rounded),
+      trailing: showMenu
+          ? const Icon(Icons.more_vert_rounded)
+          : const SizedBox.shrink(),
     );
   }
 }

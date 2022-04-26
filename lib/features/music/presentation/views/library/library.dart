@@ -7,6 +7,7 @@ import 'package:music_player/features/music/presentation/views/library/pages/alb
 import 'package:music_player/features/music/presentation/views/library/pages/artist_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/folder_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/song_page.dart';
+import 'package:music_player/features/music/presentation/views/search/search_page.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class Library extends StatefulWidget {
@@ -55,7 +56,11 @@ class _LibraryState extends State<Library> with TickerProviderStateMixin {
                       child: const Icon(Icons.menu));
                 },
               ),
-              const Icon(Icons.search)
+              InkResponse(
+                  onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => const SearchPage())),
+                  radius: 24,
+                  child: const Hero(tag: "search", child: Icon(Icons.search)))
             ],
           ),
         ),

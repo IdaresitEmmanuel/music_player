@@ -3,10 +3,15 @@ import 'package:music_player/features/music/domain/utilities/enums.dart';
 import 'package:music_player/features/music/presentation/views/playlist/playlist.dart';
 
 class ArtistWidget extends StatelessWidget {
-  const ArtistWidget({Key? key, required this.artist, required this.noOfSongs})
+  const ArtistWidget(
+      {Key? key,
+      required this.artist,
+      required this.noOfSongs,
+      this.showMenu = true})
       : super(key: key);
   final String artist;
   final String noOfSongs;
+  final bool showMenu;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -25,7 +30,9 @@ class ArtistWidget extends StatelessWidget {
       ),
       title: Text(artist),
       subtitle: Text(noOfSongs),
-      trailing: const Icon(Icons.more_vert_rounded),
+      trailing: showMenu
+          ? const Icon(Icons.more_vert_rounded)
+          : const SizedBox.shrink(),
     );
   }
 }

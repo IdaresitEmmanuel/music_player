@@ -25,7 +25,7 @@ void main() {
   });
 
   // test to set theme to preferences
-  test('set theme to preferences with error', () async {
+  test('set theme to preferences', () async {
     when(mockSharedPreferences.setString(
             ThemeSetting.key.toString(), ThemeSetting.light.toString()))
         .thenAnswer((_) async => true);

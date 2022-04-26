@@ -5,8 +5,10 @@ import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
 
 class SongWidget extends StatelessWidget {
-  const SongWidget({Key? key, required this.song}) : super(key: key);
+  const SongWidget({Key? key, required this.song, this.showMenu = true})
+      : super(key: key);
   final Music song;
+  final bool showMenu;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -35,7 +37,9 @@ class SongWidget extends StatelessWidget {
       ),
       title: Text(song.title),
       subtitle: Text(song.artist ?? '<unknown>'),
-      trailing: const Icon(Icons.more_vert_rounded),
+      trailing: showMenu
+          ? const Icon(Icons.more_vert_rounded)
+          : const SizedBox.shrink(),
     );
   }
 }

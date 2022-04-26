@@ -7,8 +7,10 @@ import 'package:music_player/features/music/domain/utilities/helper_functions.da
 import 'package:music_player/features/music/presentation/views/playlist/playlist.dart';
 
 class AlbumWidget extends StatelessWidget {
-  const AlbumWidget({Key? key, required this.album}) : super(key: key);
+  const AlbumWidget({Key? key, required this.album, this.showMenu = true})
+      : super(key: key);
   final Album album;
+  final bool showMenu;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -40,7 +42,9 @@ class AlbumWidget extends StatelessWidget {
       ),
       title: Text(album.name),
       subtitle: Text(album.noOfSongs),
-      trailing: const Icon(Icons.more_vert_rounded),
+      trailing: showMenu
+          ? const Icon(Icons.more_vert_rounded)
+          : const SizedBox.shrink(),
     );
   }
 }
