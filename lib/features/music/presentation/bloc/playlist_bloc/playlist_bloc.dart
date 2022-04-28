@@ -9,7 +9,7 @@ import 'package:music_player/features/music/domain/usecases/music_usecases/get_m
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_music_by_artist.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_music_by_folder.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/request_storage_permission.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 
 import '../../../../../core/error/failures.dart';
 

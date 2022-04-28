@@ -5,9 +5,9 @@
 import 'dart:async' as _i3;
 
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:music_player/core/constants/enums.dart' as _i4;
 import 'package:music_player/features/music/data/datasources/settings_data_source/settings_local_data_source.dart'
     as _i2;
-import 'package:music_player/features/music/domain/utilities/enums.dart' as _i4;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values

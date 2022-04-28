@@ -1,5 +1,5 @@
 import 'package:music_player/features/music/domain/entities/album.dart';
-import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:on_audio_query/on_audio_query.dart';
 
 class AlbumsModel extends Album {

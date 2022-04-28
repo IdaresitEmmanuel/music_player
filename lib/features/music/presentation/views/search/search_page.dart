@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:music_player/features/music/presentation/views/library/widgets/song_widget.dart';
 import 'package:music_player/features/music/presentation/views/search/widgets/search_bar.dart';
@@ -41,7 +41,11 @@ class _SearchPageState extends State<SearchPage> {
                         itemCount: state.musicList.length,
                         itemBuilder: (context, index) {
                           return SongWidget(
-                              song: state.musicList[index], showMenu: false);
+                            song: state.musicList[index],
+                            showMenu: false,
+                            index: 0,
+                            songWidgetType: SongWidgetType.search,
+                          );
                         });
 
                   case SearchCategory.aritst:

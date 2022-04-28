@@ -1,6 +1,7 @@
 import 'dart:developer';
 
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/error/exceptions.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SearchDataSource {
@@ -17,6 +18,7 @@ abstract class SearchDataSource {
 
 class SearchDataSourceImpl extends SearchDataSource {
   final SharedPreferences sharedPreferences;
+
   SearchDataSourceImpl({required this.sharedPreferences});
   @override
   Future<SearchCategory> getSearchCategory() async {

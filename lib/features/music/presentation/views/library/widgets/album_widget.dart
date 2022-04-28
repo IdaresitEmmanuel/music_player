@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:music_player/features/music/domain/entities/album.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
-import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/core/constants/enums.dart';
+import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:music_player/features/music/presentation/views/playlist/playlist.dart';
 
 class AlbumWidget extends StatelessWidget {

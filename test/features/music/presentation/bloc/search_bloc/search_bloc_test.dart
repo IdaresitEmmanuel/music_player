@@ -7,7 +7,7 @@ import 'package:music_player/features/music/domain/entities/album.dart';
 import 'package:music_player/features/music/domain/entities/artist.dart';
 import 'package:music_player/features/music/domain/entities/folder.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 
 import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart';
 import 'package:music_player/features/music/presentation/bloc/search_bloc/search_bloc.dart';

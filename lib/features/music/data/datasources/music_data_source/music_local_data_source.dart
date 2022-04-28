@@ -1,5 +1,5 @@
 import 'package:music_player/core/error/exceptions.dart';
-import 'package:music_player/features/music/domain/utilities/helper_functions.dart';
+import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:music_player/features/music/data/models/album_model.dart';
 import 'package:music_player/features/music/data/models/artist_model.dart';
 import 'package:music_player/features/music/data/models/folder_model.dart';

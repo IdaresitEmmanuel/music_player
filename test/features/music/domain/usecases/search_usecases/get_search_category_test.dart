@@ -3,7 +3,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:music_player/features/music/domain/repositories/search_repository.dart';
 import 'package:music_player/features/music/domain/usecases/search_usecases/get_search_category.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 
 import 'get_search_category_test.mocks.dart';
 

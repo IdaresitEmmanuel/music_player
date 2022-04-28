@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/settings_bloc/settings_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/album_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/artist_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/folder_page.dart';
 import 'package:music_player/features/music/presentation/views/library/pages/song_page.dart';
+import 'package:music_player/features/music/presentation/views/player/mini_player.dart';
 import 'package:music_player/features/music/presentation/views/search/search_page.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
@@ -102,7 +103,8 @@ class _LibraryState extends State<Library> with TickerProviderStateMixin {
               FolderPage()
             ],
           ),
-        )
+        ),
+        const MiniPlayer(),
       ],
     )));
   }

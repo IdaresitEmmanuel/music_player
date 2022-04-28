@@ -80,7 +80,7 @@ class _SongPageState extends State<SongPage> {
                 cacheExtent: state.musicList.length.toDouble(),
                 itemBuilder: (context, index) {
                   final music = state.musicList[index];
-                  return SongWidget(song: music);
+                  return SongWidget(song: music, index: index);
                 },
               );
             },

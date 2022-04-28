@@ -1,13 +1,15 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:music_player/features/music/data/datasources/search_data_source/search_data_source.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:speech_to_text/speech_to_text.dart';
+
+import 'package:music_player/features/music/data/datasources/search_data_source/search_data_source.dart';
+import 'package:music_player/core/constants/enums.dart';
 
 import 'search_data_source_test.mocks.dart';
 
-@GenerateMocks([SharedPreferences])
+@GenerateMocks([SharedPreferences, SpeechToText])
 void main() {
   MockSharedPreferences mockSharedPreferences = MockSharedPreferences();
   SearchDataSourceImpl searchDataSourceImpl =

@@ -6,7 +6,7 @@ import 'package:music_player/core/error/exceptions.dart';
 import 'package:music_player/core/error/failures.dart';
 import 'package:music_player/features/music/data/datasources/search_data_source/search_data_source.dart';
 import 'package:music_player/features/music/data/repositories/search_repository_impl.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 
 import 'search_repository_impl_test.mocks.dart';
 
@@ -93,4 +93,26 @@ void main() {
       verify(mockSearchDataSource.setSearchCategory(SearchCategory.songs));
     });
   });
+
+  // group("getTextFromSpeech tests", () {
+  //   test("should return a string when call is successfull", () async {
+  //     when(mockSearchDataSource.getTextFromSpeech())
+  //         .thenAnswer((_) async => "hello");
+
+  //     final result = await searchRepositoryImpl.getTextFromSpeech();
+
+  //     expect(result, const Right("hello"));
+  //     verify(mockSearchDataSource.getTextFromSpeech());
+  //   });
+
+  //   test("should return a failure when call is unsuccessfull", () async {
+  //     when(mockSearchDataSource.getTextFromSpeech())
+  //         .thenThrow(SystemException());
+
+  //     final result = await searchRepositoryImpl.getTextFromSpeech();
+
+  //     expect(result, Left(SystemFailure()));
+  //     verify(mockSearchDataSource.getTextFromSpeech());
+  //   });
+  // });
 }

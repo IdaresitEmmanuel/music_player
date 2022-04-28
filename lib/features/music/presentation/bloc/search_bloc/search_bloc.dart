@@ -6,7 +6,7 @@ import 'package:music_player/features/music/domain/entities/folder.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/domain/usecases/search_usecases/get_search_category.dart';
 import 'package:music_player/features/music/domain/usecases/search_usecases/set_search_category.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart';
 
 part 'search_event.dart';

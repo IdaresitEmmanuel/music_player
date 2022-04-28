@@ -5,7 +5,7 @@ import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 import 'package:music_player/features/music/domain/usecases/settings_usecases/get_theme.dart';
 import 'package:music_player/features/music/domain/usecases/settings_usecases/set_theme.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/settings_bloc/settings_bloc.dart';
 
 import 'settings_bloc_test.mocks.dart';

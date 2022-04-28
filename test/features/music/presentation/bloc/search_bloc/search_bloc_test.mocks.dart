@@ -7,6 +7,7 @@ import 'dart:async' as _i10;
 import 'package:dartz/dartz.dart' as _i9;
 import 'package:flutter_bloc/flutter_bloc.dart' as _i11;
 import 'package:mockito/mockito.dart' as _i1;
+import 'package:music_player/core/constants/enums.dart' as _i13;
 import 'package:music_player/core/error/failures.dart' as _i15;
 import 'package:music_player/features/music/domain/repositories/search_repository.dart'
     as _i8;
@@ -24,8 +25,6 @@ import 'package:music_player/features/music/domain/usecases/search_usecases/get_
     as _i12;
 import 'package:music_player/features/music/domain/usecases/search_usecases/set_search_category.dart'
     as _i14;
-import 'package:music_player/features/music/domain/utilities/enums.dart'
-    as _i13;
 import 'package:music_player/features/music/presentation/bloc/music_bloc/music_bloc.dart'
     as _i7;
 

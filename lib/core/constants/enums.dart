@@ -18,3 +18,11 @@ enum SearchCategory {
   album,
   folder,
 }
+
+enum KeyManager { newPlaylistKey }
+
+enum SongWidgetType {
+  songs,
+  search,
+  playlist,
+}

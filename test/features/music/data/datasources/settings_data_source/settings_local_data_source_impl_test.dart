@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:music_player/features/music/data/datasources/settings_data_source/settings_local_data_source.dart';

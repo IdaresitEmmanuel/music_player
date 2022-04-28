@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:music_player/features/music/domain/utilities/enums.dart';
+import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/search_bloc/search_bloc.dart';
 
 class SearchCategoryWidget extends StatelessWidget {
@@ -36,10 +36,7 @@ class SearchCategoryWidget extends StatelessWidget {
                         Icons.headphones_rounded,
                         color: state.searchCategory == SearchCategory.songs
                             ? Colors.white
-                            : Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium!
-                                .color,
+                            : Theme.of(context).textTheme.bodyMedium!.color,
                         size: 16.0,
                       ),
                       const SizedBox(width: 5.0),
@@ -48,10 +45,7 @@ class SearchCategoryWidget extends StatelessWidget {
                         style: TextStyle(
                           color: state.searchCategory == SearchCategory.songs
                               ? Colors.white
-                              : Theme.of(context)
-                                  .primaryTextTheme
-                                  .bodyMedium!
-                                  .color,
+                              : Theme.of(context).textTheme.bodyMedium!.color,
                           fontSize: 12.0,
                         ),
                       ),
@@ -80,10 +74,7 @@ class SearchCategoryWidget extends StatelessWidget {
                         size: 16.0,
                         color: state.searchCategory == SearchCategory.aritst
                             ? Colors.white
-                            : Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium!
-                                .color,
+                            : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
                       Text("Artists",
@@ -93,7 +84,7 @@ class SearchCategoryWidget extends StatelessWidget {
                                   state.searchCategory == SearchCategory.aritst
                                       ? Colors.white
                                       : Theme.of(context)
-                                          .primaryTextTheme
+                                          .textTheme
                                           .bodyMedium!
                                           .color)),
                     ],
@@ -121,10 +112,7 @@ class SearchCategoryWidget extends StatelessWidget {
                         size: 16.0,
                         color: state.searchCategory == SearchCategory.album
                             ? Colors.white
-                            : Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium!
-                                .color,
+                            : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
                       Text("Albums",
@@ -134,7 +122,7 @@ class SearchCategoryWidget extends StatelessWidget {
                                   state.searchCategory == SearchCategory.album
                                       ? Colors.white
                                       : Theme.of(context)
-                                          .primaryTextTheme
+                                          .textTheme
                                           .bodyMedium!
                                           .color)),
                     ],
@@ -162,10 +150,7 @@ class SearchCategoryWidget extends StatelessWidget {
                         size: 16.0,
                         color: state.searchCategory == SearchCategory.folder
                             ? Colors.white
-                            : Theme.of(context)
-                                .primaryTextTheme
-                                .bodyMedium!
-                                .color,
+                            : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
                       Text("Folders",
@@ -175,7 +160,7 @@ class SearchCategoryWidget extends StatelessWidget {
                                   state.searchCategory == SearchCategory.folder
                                       ? Colors.white
                                       : Theme.of(context)
-                                          .primaryTextTheme
+                                          .textTheme
                                           .bodyMedium!
                                           .color)),
                     ],
