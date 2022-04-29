@@ -20,11 +20,19 @@ class _$PlayerStateTearOff {
   _PlayerState call(
       {required bool isPlaying,
       required List<Music> queue,
-      required int currentIndex}) {
+      required int currentIndex,
+      required Duration songDuration,
+      required Duration currentPositioin,
+      required AudioServiceShuffleMode shuffleMode,
+      required AudioServiceRepeatMode repeatMode}) {
     return _PlayerState(
       isPlaying: isPlaying,
       queue: queue,
       currentIndex: currentIndex,
+      songDuration: songDuration,
+      currentPositioin: currentPositioin,
+      shuffleMode: shuffleMode,
+      repeatMode: repeatMode,
     );
   }
 }
@@ -37,6 +45,10 @@ mixin _$PlayerState {
   bool get isPlaying => throw _privateConstructorUsedError;
   List<Music> get queue => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
+  Duration get songDuration => throw _privateConstructorUsedError;
+  Duration get currentPositioin => throw _privateConstructorUsedError;
+  AudioServiceShuffleMode get shuffleMode => throw _privateConstructorUsedError;
+  AudioServiceRepeatMode get repeatMode => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PlayerStateCopyWith<PlayerState> get copyWith =>
@@ -48,7 +60,14 @@ abstract class $PlayerStateCopyWith<$Res> {
   factory $PlayerStateCopyWith(
           PlayerState value, $Res Function(PlayerState) then) =
       _$PlayerStateCopyWithImpl<$Res>;
-  $Res call({bool isPlaying, List<Music> queue, int currentIndex});
+  $Res call(
+      {bool isPlaying,
+      List<Music> queue,
+      int currentIndex,
+      Duration songDuration,
+      Duration currentPositioin,
+      AudioServiceShuffleMode shuffleMode,
+      AudioServiceRepeatMode repeatMode});
 }
 
 /// @nodoc
@@ -64,6 +83,10 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
     Object? isPlaying = freezed,
     Object? queue = freezed,
     Object? currentIndex = freezed,
+    Object? songDuration = freezed,
+    Object? currentPositioin = freezed,
+    Object? shuffleMode = freezed,
+    Object? repeatMode = freezed,
   }) {
     return _then(_value.copyWith(
       isPlaying: isPlaying == freezed
@@ -78,6 +101,22 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      songDuration: songDuration == freezed
+          ? _value.songDuration
+          : songDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      currentPositioin: currentPositioin == freezed
+          ? _value.currentPositioin
+          : currentPositioin // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      shuffleMode: shuffleMode == freezed
+          ? _value.shuffleMode
+          : shuffleMode // ignore: cast_nullable_to_non_nullable
+              as AudioServiceShuffleMode,
+      repeatMode: repeatMode == freezed
+          ? _value.repeatMode
+          : repeatMode // ignore: cast_nullable_to_non_nullable
+              as AudioServiceRepeatMode,
     ));
   }
 }
@@ -89,7 +128,14 @@ abstract class _$PlayerStateCopyWith<$Res>
           _PlayerState value, $Res Function(_PlayerState) then) =
       __$PlayerStateCopyWithImpl<$Res>;
   @override
-  $Res call({bool isPlaying, List<Music> queue, int currentIndex});
+  $Res call(
+      {bool isPlaying,
+      List<Music> queue,
+      int currentIndex,
+      Duration songDuration,
+      Duration currentPositioin,
+      AudioServiceShuffleMode shuffleMode,
+      AudioServiceRepeatMode repeatMode});
 }
 
 /// @nodoc
@@ -107,6 +153,10 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
     Object? isPlaying = freezed,
     Object? queue = freezed,
     Object? currentIndex = freezed,
+    Object? songDuration = freezed,
+    Object? currentPositioin = freezed,
+    Object? shuffleMode = freezed,
+    Object? repeatMode = freezed,
   }) {
     return _then(_PlayerState(
       isPlaying: isPlaying == freezed
@@ -121,6 +171,22 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      songDuration: songDuration == freezed
+          ? _value.songDuration
+          : songDuration // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      currentPositioin: currentPositioin == freezed
+          ? _value.currentPositioin
+          : currentPositioin // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      shuffleMode: shuffleMode == freezed
+          ? _value.shuffleMode
+          : shuffleMode // ignore: cast_nullable_to_non_nullable
+              as AudioServiceShuffleMode,
+      repeatMode: repeatMode == freezed
+          ? _value.repeatMode
+          : repeatMode // ignore: cast_nullable_to_non_nullable
+              as AudioServiceRepeatMode,
     ));
   }
 }
@@ -131,7 +197,11 @@ class _$_PlayerState implements _PlayerState {
   const _$_PlayerState(
       {required this.isPlaying,
       required this.queue,
-      required this.currentIndex});
+      required this.currentIndex,
+      required this.songDuration,
+      required this.currentPositioin,
+      required this.shuffleMode,
+      required this.repeatMode});
 
   @override
   final bool isPlaying;
@@ -139,10 +209,18 @@ class _$_PlayerState implements _PlayerState {
   final List<Music> queue;
   @override
   final int currentIndex;
+  @override
+  final Duration songDuration;
+  @override
+  final Duration currentPositioin;
+  @override
+  final AudioServiceShuffleMode shuffleMode;
+  @override
+  final AudioServiceRepeatMode repeatMode;
 
   @override
   String toString() {
-    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex)';
+    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex, songDuration: $songDuration, currentPositioin: $currentPositioin, shuffleMode: $shuffleMode, repeatMode: $repeatMode)';
   }
 
   @override
@@ -153,7 +231,15 @@ class _$_PlayerState implements _PlayerState {
             const DeepCollectionEquality().equals(other.isPlaying, isPlaying) &&
             const DeepCollectionEquality().equals(other.queue, queue) &&
             const DeepCollectionEquality()
-                .equals(other.currentIndex, currentIndex));
+                .equals(other.currentIndex, currentIndex) &&
+            const DeepCollectionEquality()
+                .equals(other.songDuration, songDuration) &&
+            const DeepCollectionEquality()
+                .equals(other.currentPositioin, currentPositioin) &&
+            const DeepCollectionEquality()
+                .equals(other.shuffleMode, shuffleMode) &&
+            const DeepCollectionEquality()
+                .equals(other.repeatMode, repeatMode));
   }
 
   @override
@@ -161,7 +247,11 @@ class _$_PlayerState implements _PlayerState {
       runtimeType,
       const DeepCollectionEquality().hash(isPlaying),
       const DeepCollectionEquality().hash(queue),
-      const DeepCollectionEquality().hash(currentIndex));
+      const DeepCollectionEquality().hash(currentIndex),
+      const DeepCollectionEquality().hash(songDuration),
+      const DeepCollectionEquality().hash(currentPositioin),
+      const DeepCollectionEquality().hash(shuffleMode),
+      const DeepCollectionEquality().hash(repeatMode));
 
   @JsonKey(ignore: true)
   @override
@@ -173,7 +263,11 @@ abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
       {required bool isPlaying,
       required List<Music> queue,
-      required int currentIndex}) = _$_PlayerState;
+      required int currentIndex,
+      required Duration songDuration,
+      required Duration currentPositioin,
+      required AudioServiceShuffleMode shuffleMode,
+      required AudioServiceRepeatMode repeatMode}) = _$_PlayerState;
 
   @override
   bool get isPlaying;
@@ -181,6 +275,14 @@ abstract class _PlayerState implements PlayerState {
   List<Music> get queue;
   @override
   int get currentIndex;
+  @override
+  Duration get songDuration;
+  @override
+  Duration get currentPositioin;
+  @override
+  AudioServiceShuffleMode get shuffleMode;
+  @override
+  AudioServiceRepeatMode get repeatMode;
   @override
   @JsonKey(ignore: true)
   _$PlayerStateCopyWith<_PlayerState> get copyWith =>

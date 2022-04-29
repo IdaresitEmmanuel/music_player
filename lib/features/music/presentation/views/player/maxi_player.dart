@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_player/core/utilities/helper_functions.dart';
@@ -16,6 +18,27 @@ class MaxiPlayer extends StatefulWidget {
 }
 
 class _MaxiPlayerState extends State<MaxiPlayer> {
+  late final StreamSubscription playerBlocStream;
+  final ValueNotifier<int?> thumbnailNotifier = ValueNotifier(null);
+
+  @override
+  void initState() {
+    playerBlocStream = context.read<PlayerBloc>().stream.listen((state) {
+      var music = state.queue[state.currentIndex];
+      if (music.albumId != thumbnailNotifier.value) {
+        thumbnailNotifier.value = music.albumId;
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    playerBlocStream.cancel();
+    thumbnailNotifier.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +67,12 @@ class _MaxiPlayerState extends State<MaxiPlayer> {
                     constraints:
                         const BoxConstraints(maxWidth: 300.0, maxHeight: 300.0),
                     color: Theme.of(context).cardColor,
-                    child: BlocBuilder<PlayerBloc, PlayerState>(
-                      builder: (context, state) {
-                        final song = state.queue[state.currentIndex];
+                    child: ValueListenableBuilder(
+                      valueListenable: thumbnailNotifier,
+                      builder: (context, int? albumId, child) {
                         return FutureBuilder(
-                            future: song.albumId != null
-                                ? getArtWork(song.albumId!)
+                            future: albumId != null
+                                ? getArtWork(albumId)
                                 : Future.value(),
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
@@ -111,37 +134,44 @@ class Controlls extends StatelessWidget {
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         Container(
           margin: EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
-          child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text("00:14"),
-                Text("03:12"),
-              ]),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
-          child: SliderTheme(
-            data: SliderThemeData(
-                trackShape: CustomTrackShape(), trackHeight: 0.5),
-            child: Slider(
-              value: 4,
-              min: 0,
-              max: 8,
-              // value: getMilliSeconds(progress.current) <=
-              //         getMilliSeconds(progress.total)
-              //     ? getMilliSeconds(progress.current)
-              //     : getMilliSeconds(progress.total),
-              // min: getMilliSeconds(Duration.zero),
-              // max: getMilliSeconds(progress.total),
-              onChanged: (value) {
-                // if (pageManager
-                //     .playlistNotifier.value.isNotEmpty) {
-                //   pageManager.seek(Duration(
-                //       milliseconds: value.round()));
-                // }
-              },
-            ),
+          child: BlocBuilder<PlayerBloc, PlayerState>(
+            builder: (context, state) {
+              return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(getDurationString(
+                        state.currentPositioin.inMilliseconds.toDouble())),
+                    Text(getDurationString(
+                        state.songDuration.inMilliseconds.toDouble())),
+                  ]);
+            },
           ),
+        ),
+        BlocBuilder<PlayerBloc, PlayerState>(
+          builder: (context, state) {
+            return Container(
+              margin:
+                  EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
+              child: SliderTheme(
+                data: SliderThemeData(
+                    trackShape: CustomTrackShape(), trackHeight: 0.5),
+                child: Slider(
+                  value: getMilliSeconds(state.currentPositioin) <=
+                          getMilliSeconds(state.songDuration)
+                      ? getMilliSeconds(state.currentPositioin)
+                      : getMilliSeconds(state.songDuration),
+                  min: getMilliSeconds(Duration.zero),
+                  max: getMilliSeconds(state.songDuration),
+                  onChanged: (value) {
+                    if (state.queue.isNotEmpty) {
+                      context.read<PlayerBloc>().add(Seek(
+                          position: Duration(milliseconds: value.round())));
+                    }
+                  },
+                ),
+              ),
+            );
+          },
         ),
         const MediaButtons(),
         Container(
@@ -181,7 +211,24 @@ class MediaButtons extends StatelessWidget {
           margin: EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            const Icon(Icons.shuffle_rounded, size: 30),
+            GestureDetector(
+              onTap: () {
+                if (state.shuffleMode == AudioServiceShuffleMode.none) {
+                  context.read<PlayerBloc>().add(
+                      SetShuffleMode(shuffleMode: AudioServiceShuffleMode.all));
+                } else {
+                  context.read<PlayerBloc>().add(SetShuffleMode(
+                      shuffleMode: AudioServiceShuffleMode.none));
+                }
+              },
+              child: Icon(
+                Icons.shuffle_rounded,
+                size: 30,
+                color: state.shuffleMode == AudioServiceShuffleMode.all
+                    ? Theme.of(context).primaryColor
+                    : Theme.of(context).iconTheme.color,
+              ),
+            ),
             GestureDetector(
                 onTap: () => context.read<PlayerBloc>().add(SkipPrevious()),
                 child: const Icon(Icons.skip_previous_rounded, size: 40)),

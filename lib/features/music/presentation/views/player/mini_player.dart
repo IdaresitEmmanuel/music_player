@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -17,11 +18,38 @@ class MiniPlayer extends StatefulWidget {
 }
 
 class _MiniPlayerState extends State<MiniPlayer> {
+  late final StreamSubscription playerBlocStream;
+  final ValueNotifier<int?> thumbnailNotifier = ValueNotifier(null);
+  final ValueNotifier<bool> visibleNotifier = ValueNotifier(false);
+
+  @override
+  void initState() {
+    playerBlocStream = context.read<PlayerBloc>().stream.listen((state) {
+      if (state.queue.isNotEmpty) {
+        var music = state.queue[state.currentIndex];
+        if (music.albumId != thumbnailNotifier.value) {
+          thumbnailNotifier.value = music.albumId;
+        }
+      }
+      visibleNotifier.value = state.queue.isNotEmpty;
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    visibleNotifier.dispose();
+    thumbnailNotifier.dispose();
+    playerBlocStream.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PlayerBloc, PlayerState>(
-      builder: (context, state) {
-        return state.queue.isEmpty
+    return ValueListenableBuilder(
+      valueListenable: visibleNotifier,
+      builder: (context, bool visible, child) {
+        return !visible
             ? const SizedBox.shrink()
             : GestureDetector(
                 onTap: () => Navigator.of(context).push(
@@ -34,12 +62,13 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   color: Theme.of(context).cardColor,
                   child: Row(
                     children: [
-                      BlocBuilder<PlayerBloc, PlayerState>(
-                        builder: (context, state) {
-                          final song = state.queue[state.currentIndex];
+                      ValueListenableBuilder(
+                        valueListenable: thumbnailNotifier,
+                        builder: (context, int? albumId, child) {
+                          // final song = state.queue[state.currentIndex];
                           return FutureBuilder(
-                              future: song.albumId != null
-                                  ? getArtWork(song.albumId!)
+                              future: albumId != null
+                                  ? getArtWork(albumId)
                                   : Future.value(),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {

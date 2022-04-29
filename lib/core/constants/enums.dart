@@ -26,3 +26,16 @@ enum SongWidgetType {
   search,
   playlist,
 }
+
+enum Shuffle {
+  key,
+  on,
+  off,
+}
+
+enum Repeat {
+  key,
+  all,
+  single,
+  off,
+}

@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:get_it/get_it.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:music_player/core/platform/storage_permission_info.dart';
 import 'package:music_player/features/music/data/datasources/music_data_source/music_local_data_source.dart';
 import 'package:music_player/features/music/data/datasources/search_data_source/search_data_source.dart';
@@ -128,6 +129,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => sharedPreferences);
 
   // sl.registerLazySingleton(() => SpeechToText());
+  sl.registerLazySingleton(() => AndroidEqualizer());
 
   // ! Services
   sl.registerSingleton<AudioHandler>(await initAudioService());

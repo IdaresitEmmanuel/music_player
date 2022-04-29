@@ -77,16 +77,15 @@ class SearchCategoryWidget extends StatelessWidget {
                             : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
-                      Text("Artists",
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              color:
-                                  state.searchCategory == SearchCategory.aritst
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .color)),
+                      Text(
+                        "Artists",
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: state.searchCategory == SearchCategory.aritst
+                              ? Colors.white
+                              : Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -115,16 +114,15 @@ class SearchCategoryWidget extends StatelessWidget {
                             : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
-                      Text("Albums",
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              color:
-                                  state.searchCategory == SearchCategory.album
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .color)),
+                      Text(
+                        "Albums",
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: state.searchCategory == SearchCategory.album
+                              ? Colors.white
+                              : Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -153,16 +151,15 @@ class SearchCategoryWidget extends StatelessWidget {
                             : Theme.of(context).textTheme.bodyMedium!.color,
                       ),
                       const SizedBox(width: 5.0),
-                      Text("Folders",
-                          style: TextStyle(
-                              fontSize: 12.0,
-                              color:
-                                  state.searchCategory == SearchCategory.folder
-                                      ? Colors.white
-                                      : Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium!
-                                          .color)),
+                      Text(
+                        "Folders",
+                        style: TextStyle(
+                          fontSize: 12.0,
+                          color: state.searchCategory == SearchCategory.folder
+                              ? Colors.white
+                              : Theme.of(context).textTheme.bodyMedium!.color,
+                        ),
+                      ),
                     ],
                   ),
                 ),

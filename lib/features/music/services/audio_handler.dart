@@ -1,9 +1,10 @@
 import 'package:audio_service/audio_service.dart';
-
-// import 'package:hye_player/helpers/key_manager.dart';
-// import 'package:hye_player/helpers/store_manager.dart';
+import 'package:audio_session/audio_session.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:music_player/core/constants/enums.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../service_locator.dart';
 
 Future<AudioHandler> initAudioService() async {
   return await AudioService.init(
@@ -21,45 +22,54 @@ Future<AudioHandler> initAudioService() async {
 }
 
 class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
-  final _player = AudioPlayer();
+  final _equalizer = sl<AndroidEqualizer>();
+  late final AudioPlayer _player;
   final _playlist = ConcatenatingAudioSource(children: []);
-
+  late final SharedPreferences _sharedPreferences = sl<SharedPreferences>();
   MyAudioHandler() {
-    _loadEmptyPlaylist();
+    _init();
     _notifyAudioHandlerAboutPlaybackEvents();
     _listenForDurationChanges();
-    // _setShuffleMode();
-    // _setRepeatMode();
+    _setShuffleMode();
+    _setRepeatMode();
     _listenForShuffleMode();
-    // _listenForRepeatMode();
+    _listenForRepeatMode();
   }
 
-  // _setShuffleMode() {
-  //   StoreManager.readData(KeyManager.shuffleKey).then((value) {
-  //     var shuffleMode = value ?? KeyManager.shuffleOff;
-  //     if (shuffleMode == KeyManager.shuffleOn) {
-  //       _player.setShuffleModeEnabled(true);
-  //     } else {
-  //       _player.setShuffleModeEnabled(false);
-  //     }
-  //   });
-  // }
+  _setShuffleMode() {
+    var shuffleMode = _sharedPreferences.getString(Shuffle.key.toString()) ??
+        Shuffle.off.toString();
+    if (shuffleMode == Shuffle.on.toString()) {
+      _player.setShuffleModeEnabled(true);
+    } else {
+      _player.setShuffleModeEnabled(false);
+    }
+  }
 
-  // _setRepeatMode() {
-  //   StoreManager.readData(KeyManager.repeatKey).then((value) {
-  //     var repeatMode = value ?? KeyManager.repeatOff;
-  //     if (repeatMode == KeyManager.repeatAll) {
-  //       _player.setLoopMode(LoopMode.all);
-  //     }
-  //     if (repeatMode == KeyManager.repeatSingle) {
-  //       _player.setLoopMode(LoopMode.one);
-  //     } else {
-  //       _player.setLoopMode(LoopMode.off);
-  //     }
-  //   });
-  // }
+  _setRepeatMode() {
+    var repeatMode = _sharedPreferences.getString(Repeat.key.toString()) ??
+        Repeat.off.toString();
+    if (repeatMode == Repeat.all.toString()) {
+      _player.setLoopMode(LoopMode.all);
+    }
+    if (repeatMode == Repeat.single.toString()) {
+      _player.setLoopMode(LoopMode.one);
+    } else {
+      _player.setLoopMode(LoopMode.off);
+    }
+  }
 
-  Future<void> _loadEmptyPlaylist() async {
+  Future<void> _init() async {
+    _player = AudioPlayer(
+      audioPipeline: AudioPipeline(
+        androidAudioEffects: [
+          // _loudnessEnhancer,
+          _equalizer,
+        ],
+      ),
+    );
+    final session = await AudioSession.instance;
+    await session.configure(const AudioSessionConfiguration.music());
     _playlist.clear();
     try {
       await _player.setAudioSource(
@@ -104,33 +114,38 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     return super.skipToPrevious();
   }
 
-  // @override
-  // Future<void> setShuffleMode(AudioServiceShuffleMode shuffleMode) {
-  //   if (shuffleMode == AudioServiceShuffleMode.all) {
-  //     _player.setShuffleModeEnabled(true);
-  //     StoreManager.saveData(KeyManager.shuffleKey, KeyManager.shuffleOn);
-  //   } else {
-  //     _player.setShuffleModeEnabled(false);
-  //     StoreManager.saveData(KeyManager.shuffleKey, KeyManager.shuffleOff);
-  //   }
-  //   return super.setShuffleMode(shuffleMode);
-  // }
+  @override
+  Future<void> setShuffleMode(AudioServiceShuffleMode shuffleMode) {
+    if (shuffleMode == AudioServiceShuffleMode.all) {
+      _player.setShuffleModeEnabled(true);
+      _sharedPreferences.setString(
+          Shuffle.key.toString(), Shuffle.on.toString());
+    } else {
+      _player.setShuffleModeEnabled(false);
+      _sharedPreferences.setString(
+          Shuffle.key.toString(), Shuffle.off.toString());
+    }
+    return super.setShuffleMode(shuffleMode);
+  }
 
   @override
-  // Future<void> setRepeatMode(AudioServiceRepeatMode repeatMode) {
-  //   if (repeatMode == AudioServiceRepeatMode.all) {
-  //     _player.setLoopMode(LoopMode.all);
-  //     StoreManager.saveData(KeyManager.repeatKey, KeyManager.repeatAll);
-  //   } else if (repeatMode == AudioServiceRepeatMode.one) {
-  //     _player.setLoopMode(LoopMode.one);
-  //     StoreManager.saveData(KeyManager.repeatKey, KeyManager.repeatSingle);
-  //   } else {
-  //     _player.setLoopMode(LoopMode.off);
-  //     StoreManager.saveData(KeyManager.repeatKey, KeyManager.repeatOff);
-  //   }
+  Future<void> setRepeatMode(AudioServiceRepeatMode repeatMode) {
+    if (repeatMode == AudioServiceRepeatMode.all) {
+      _player.setLoopMode(LoopMode.all);
+      _sharedPreferences.setString(
+          Repeat.key.toString(), Repeat.all.toString());
+    } else if (repeatMode == AudioServiceRepeatMode.one) {
+      _player.setLoopMode(LoopMode.one);
+      _sharedPreferences.setString(
+          Repeat.key.toString(), Repeat.single.toString());
+    } else {
+      _player.setLoopMode(LoopMode.off);
+      _sharedPreferences.setString(
+          Repeat.key.toString(), Repeat.off.toString());
+    }
 
-  //   return super.setRepeatMode(repeatMode);
-  // }
+    return super.setRepeatMode(repeatMode);
+  }
 
   @override
   Future<void> seek(Duration position) async {
@@ -278,18 +293,18 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     });
   }
 
-  // void _listenForRepeatMode() {
-  //   _player.loopModeStream.listen((event) {
-  //     if (event == LoopMode.all) {
-  //       playbackState.add(playbackState.value
-  //           .copyWith(repeatMode: AudioServiceRepeatMode.all));
-  //     } else if (event == LoopMode.one) {
-  //       playbackState.add(playbackState.value
-  //           .copyWith(repeatMode: AudioServiceRepeatMode.one));
-  //     } else {
-  //       playbackState.add(playbackState.value
-  //           .copyWith(repeatMode: AudioServiceRepeatMode.none));
-  //     }
-  //   });
-  // }
+  void _listenForRepeatMode() {
+    _player.loopModeStream.listen((event) {
+      if (event == LoopMode.all) {
+        playbackState.add(playbackState.value
+            .copyWith(repeatMode: AudioServiceRepeatMode.all));
+      } else if (event == LoopMode.one) {
+        playbackState.add(playbackState.value
+            .copyWith(repeatMode: AudioServiceRepeatMode.one));
+      } else {
+        playbackState.add(playbackState.value
+            .copyWith(repeatMode: AudioServiceRepeatMode.none));
+      }
+    });
+  }
 }

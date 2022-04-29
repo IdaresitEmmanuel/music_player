@@ -16,18 +16,32 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   final AudioHandler _audioHandler;
   late final StreamSubscription playbackstateSubscription;
   late final StreamSubscription queueSubscription;
+  late final StreamSubscription<MediaItem?> mediaItemSubscription;
+  late final StreamSubscription positionSubscription;
   PlayerBloc(this._audioHandler) : super(PlayerState.initial()) {
     // Stream Subscriptions
 
     playbackstateSubscription =
         _audioHandler.playbackState.listen((playbackState) {
+      var index = playbackState.queueIndex ?? 0;
       add(PlayStateEvent(
           isPlaying: playbackState.playing,
-          currentIndex: playbackState.queueIndex!));
+          currentIndex: index,
+          shuffleMode: playbackState.shuffleMode));
     });
 
     queueSubscription = _audioHandler.queue.listen((playlist) {
       add(QueueEvent(musicList: mediaItemToMusic(playlist)));
+    });
+
+    mediaItemSubscription = _audioHandler.mediaItem.listen((mediaItem) {
+      if (mediaItem != null) {
+        add(MediaItemEvent(songDurarion: mediaItem.duration ?? Duration.zero));
+      }
+    });
+
+    positionSubscription = AudioService.position.listen((position) {
+      add(PositionEvent(currentPosition: position));
     });
 
     // bloc Events
@@ -40,12 +54,33 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     });
 
     on<PlayStateEvent>((event, emit) {
-      emit(state.copyWith(
-          isPlaying: event.isPlaying, currentIndex: event.currentIndex));
+      emit(
+        state.copyWith(
+          isPlaying: event.isPlaying,
+          currentIndex: event.currentIndex,
+          shuffleMode: event.shuffleMode,
+        ),
+      );
     });
 
     on<QueueEvent>((event, emit) {
       emit(state.copyWith(queue: event.musicList));
+    });
+
+    on<MediaItemEvent>((event, emit) {
+      emit(state.copyWith(songDuration: event.songDurarion));
+    });
+
+    on<PositionEvent>((event, emit) {
+      emit(state.copyWith(currentPositioin: event.currentPosition));
+    });
+
+    on<SetShuffleMode>((event, emit) {
+      _audioHandler.setShuffleMode(event.shuffleMode);
+    });
+
+    on<SetRepeatMode>((event, emit) {
+      _audioHandler.setRepeatMode(event.repeatMode);
     });
 
     // controls events
@@ -73,12 +108,17 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<SkipNext>((event, emit) {
       _audioHandler.skipToNext();
     });
+
+    on<Seek>((event, emit) {
+      _audioHandler.seek(event.position);
+    });
   }
 
   @override
   Future<void> close() {
     playbackstateSubscription.cancel();
     queueSubscription.cancel();
+    mediaItemSubscription.cancel();
     return super.close();
   }
 }

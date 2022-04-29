@@ -15,7 +15,11 @@ class SkipPrevious extends PlayerEvent {}
 class PlayStateEvent extends PlayerEvent {
   final bool isPlaying;
   final int currentIndex;
-  PlayStateEvent({required this.isPlaying, required this.currentIndex});
+  final AudioServiceShuffleMode shuffleMode;
+  PlayStateEvent(
+      {required this.isPlaying,
+      required this.currentIndex,
+      required this.shuffleMode});
 }
 
 class LoadPlaylistEvent extends PlayerEvent {
@@ -27,4 +31,29 @@ class LoadPlaylistEvent extends PlayerEvent {
 class QueueEvent extends PlayerEvent {
   List<Music> musicList;
   QueueEvent({required this.musicList});
+}
+
+class MediaItemEvent extends PlayerEvent {
+  final Duration songDurarion;
+  MediaItemEvent({required this.songDurarion});
+}
+
+class PositionEvent extends PlayerEvent {
+  final Duration currentPosition;
+  PositionEvent({required this.currentPosition});
+}
+
+class Seek extends PlayerEvent {
+  final Duration position;
+  Seek({required this.position});
+}
+
+class SetShuffleMode extends PlayerEvent {
+  final AudioServiceShuffleMode shuffleMode;
+  SetShuffleMode({required this.shuffleMode});
+}
+
+class SetRepeatMode extends PlayerEvent {
+  final AudioServiceRepeatMode repeatMode;
+  SetRepeatMode({required this.repeatMode});
 }

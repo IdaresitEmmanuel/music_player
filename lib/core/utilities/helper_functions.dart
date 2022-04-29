@@ -56,3 +56,16 @@ List<Music> mediaItemToMusic(List<MediaItem> mediaItems) {
       .toList();
   return musicList;
 }
+
+// converts milliseconds in double to duration in string
+String getDurationString(double value) {
+  Duration duration = Duration(milliseconds: value.round());
+  return [duration.inMinutes, duration.inSeconds]
+      .map((e) => e.remainder(60).toString().padLeft(2, '0'))
+      .join(':');
+}
+
+// converts duration to milliseconds in double
+double getMilliSeconds(Duration duration) {
+  return duration.inMilliseconds.toDouble();
+}
