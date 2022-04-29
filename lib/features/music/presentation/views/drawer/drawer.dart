@@ -51,7 +51,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               Navigator.of(context, rootNavigator: true).pop();
               showDialog(
                   context: context,
-                  builder: (context) => const Dialog(child: Equalizer()));
+                  builder: (context) => const Dialog(
+                      backgroundColor: Colors.transparent, child: Equalizer()));
             },
             leading: Icon(
               Icons.graphic_eq_rounded,

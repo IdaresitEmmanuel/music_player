@@ -8,6 +8,7 @@ import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/presentation/bloc/player_bloc/player_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
+import 'package:music_player/features/music/presentation/views/player/equalizer.dart';
 import 'package:music_player/features/music/presentation/views/player/queue.dart';
 
 class MaxiPlayer extends StatefulWidget {
@@ -192,7 +193,14 @@ class Controlls extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.graphic_eq_rounded),
+            InkResponse(
+                radius: 30.0,
+                onTap: () => showDialog(
+                    context: context,
+                    builder: (context) => const Dialog(
+                        backgroundColor: Colors.transparent,
+                        child: Equalizer())),
+                child: const Icon(Icons.graphic_eq_rounded)),
           ]),
         )
       ]),
@@ -243,9 +251,49 @@ class MediaButtons extends StatelessWidget {
                   size: 80.0),
             ),
             GestureDetector(
-                onTap: () => context.read<PlayerBloc>().add(SkipNext()),
-                child: const Icon(Icons.skip_next_rounded, size: 40.0)),
-            const Icon(Icons.shuffle_rounded, size: 30)
+              onTap: () => context.read<PlayerBloc>().add(SkipNext()),
+              child: const Icon(Icons.skip_next_rounded, size: 40.0),
+            ),
+            GestureDetector(
+              onTap: () {
+                switch (state.repeatMode) {
+                  case AudioServiceRepeatMode.none:
+                    {
+                      context.read<PlayerBloc>().add(SetRepeatMode(
+                          repeatMode: AudioServiceRepeatMode.all));
+                    }
+                    break;
+
+                  case AudioServiceRepeatMode.all:
+                    {
+                      context.read<PlayerBloc>().add(SetRepeatMode(
+                          repeatMode: AudioServiceRepeatMode.one));
+                    }
+                    break;
+
+                  case AudioServiceRepeatMode.one:
+                    {
+                      context.read<PlayerBloc>().add(SetRepeatMode(
+                          repeatMode: AudioServiceRepeatMode.none));
+                    }
+                    break;
+
+                  case AudioServiceRepeatMode.group:
+                    // Do nothing here
+                    break;
+                } // end switch
+              },
+              child: state.repeatMode == AudioServiceRepeatMode.one
+                  ? Icon(Icons.repeat_one_rounded,
+                      color: Theme.of(context).primaryColor, size: 30)
+                  : Icon(
+                      Icons.repeat_rounded,
+                      color: state.repeatMode == AudioServiceRepeatMode.all
+                          ? Theme.of(context).primaryColor
+                          : Theme.of(context).iconTheme.color,
+                      size: 30,
+                    ),
+            )
           ]),
         );
       },

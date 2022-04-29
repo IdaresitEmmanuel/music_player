@@ -130,6 +130,7 @@ Future<void> init() async {
 
   // sl.registerLazySingleton(() => SpeechToText());
   sl.registerLazySingleton(() => AndroidEqualizer());
+  sl.registerLazySingleton(() => AndroidLoudnessEnhancer());
 
   // ! Services
   sl.registerSingleton<AudioHandler>(await initAudioService());

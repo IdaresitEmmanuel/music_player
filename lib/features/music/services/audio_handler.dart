@@ -23,6 +23,7 @@ Future<AudioHandler> initAudioService() async {
 
 class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
   final _equalizer = sl<AndroidEqualizer>();
+  final _loudnessEnhancer = AndroidLoudnessEnhancer();
   late final AudioPlayer _player;
   final _playlist = ConcatenatingAudioSource(children: []);
   late final SharedPreferences _sharedPreferences = sl<SharedPreferences>();
@@ -63,7 +64,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
     _player = AudioPlayer(
       audioPipeline: AudioPipeline(
         androidAudioEffects: [
-          // _loudnessEnhancer,
+          _loudnessEnhancer,
           _equalizer,
         ],
       ),
