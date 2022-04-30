@@ -26,7 +26,7 @@ class AlbumWidget extends StatelessWidget {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(6.0)),
         child: FutureBuilder(
-            future: getArtWork(album.id),
+            future: getAlbumArtWork(album.id),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ClipRRect(

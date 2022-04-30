@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_album_art.dart';
 import 'package:music_player/features/music/domain/usecases/music_usecases/get_music_by_album.dart';
@@ -59,7 +60,10 @@ class PlaylistBloc extends Bloc<PlaylistEvent, PlaylistState> {
     });
 
     on<GetPlaylistThumbnailEvent>((event, emit) async {
-      final result = await getAlbumArt(event.id);
+      var result = await getAlbumArt(event.id);
+      if (state.musicList.isNotEmpty && result == null) {
+        result = await getArtWork(state.musicList[0].id);
+      }
       if (result != null) {
         emit(state.copyWith(image: some(result)));
       }

@@ -1,5 +1,6 @@
 import 'package:blur/blur.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marquee/marquee.dart';
 import 'package:music_player/core/constants/enums.dart';
@@ -42,6 +43,13 @@ class _PlaylistState extends State<Playlist> {
               toolbarHeight: 100.0,
               pinned: true,
               snap: false,
+              systemOverlayStyle: SystemUiOverlayStyle.light,
+              leading: InkResponse(
+                radius: 24,
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.arrow_back_ios_new_rounded,
+                    color: Colors.white),
+              ),
               backgroundColor: Colors.transparent,
               elevation: 0.0,
               flexibleSpace: BlocBuilder<PlaylistBloc, PlaylistState>(

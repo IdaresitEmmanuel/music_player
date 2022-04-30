@@ -89,8 +89,9 @@ class _EqualizerState extends State<Equalizer> {
                                       ),
                                       const SizedBox(height: 5.0),
                                       Text('${band.centerFrequency.round()} Hz',
-                                          style:
-                                              const TextStyle(fontSize: 10.0)),
+                                          style: const TextStyle(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.w500)),
                                       // const Spacer(),
                                     ],
                                   ),

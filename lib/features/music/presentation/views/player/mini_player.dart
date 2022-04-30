@@ -19,7 +19,7 @@ class MiniPlayer extends StatefulWidget {
 
 class _MiniPlayerState extends State<MiniPlayer> {
   late final StreamSubscription playerBlocStream;
-  final ValueNotifier<int?> thumbnailNotifier = ValueNotifier(null);
+  final ValueNotifier<int> thumbnailNotifier = ValueNotifier(0);
   final ValueNotifier<bool> visibleNotifier = ValueNotifier(false);
 
   @override
@@ -27,8 +27,8 @@ class _MiniPlayerState extends State<MiniPlayer> {
     playerBlocStream = context.read<PlayerBloc>().stream.listen((state) {
       if (state.queue.isNotEmpty) {
         var music = state.queue[state.currentIndex];
-        if (music.albumId != thumbnailNotifier.value) {
-          thumbnailNotifier.value = music.albumId;
+        if (music.id != thumbnailNotifier.value) {
+          thumbnailNotifier.value = music.id;
         }
       }
       visibleNotifier.value = state.queue.isNotEmpty;
@@ -64,12 +64,10 @@ class _MiniPlayerState extends State<MiniPlayer> {
                     children: [
                       ValueListenableBuilder(
                         valueListenable: thumbnailNotifier,
-                        builder: (context, int? albumId, child) {
+                        builder: (context, int id, child) {
                           // final song = state.queue[state.currentIndex];
                           return FutureBuilder(
-                              future: albumId != null
-                                  ? getArtWork(albumId)
-                                  : Future.value(),
+                              future: getArtWork(id),
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return SizedBox(

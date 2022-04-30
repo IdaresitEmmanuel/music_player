@@ -20,8 +20,13 @@ String playListNoToString(int number) {
 }
 
 Future<Uint8List?> getArtWork(int id) async {
-  return sl<OnAudioQuery>()
-      .queryArtwork(id, ArtworkType.ALBUM, format: ArtworkFormat.PNG);
+  final result = await sl<OnAudioQuery>().queryArtwork(id, ArtworkType.AUDIO);
+  return result;
+}
+
+Future<Uint8List?> getAlbumArtWork(int id) async {
+  final result = await sl<OnAudioQuery>().queryArtwork(id, ArtworkType.ALBUM);
+  return result;
 }
 
 List<MediaItem> musicToMediaItem(List<Music> music) {

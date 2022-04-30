@@ -48,9 +48,9 @@ class SongWidget extends StatelessWidget {
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(6.0)),
         child: FutureBuilder(
-            future: song.albumId != null
-                ? getArtWork(song.albumId!)
-                : Future.value(),
+            future: 
+                getArtWork(song.id),
+                
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ClipRRect(
@@ -64,8 +64,9 @@ class SongWidget extends StatelessWidget {
                   color: Theme.of(context).iconTheme.color);
             }),
       ),
-      title: Text(song.title),
-      subtitle: Text(song.artist ?? '<unknown>'),
+      title: Text(song.title, maxLines: 1, overflow: TextOverflow.ellipsis),
+      subtitle: Text(song.artist ?? '<unknown>',
+          maxLines: 1, overflow: TextOverflow.ellipsis),
       trailing: showMenu
           ? const Icon(Icons.more_vert_rounded)
           : const SizedBox.shrink(),
