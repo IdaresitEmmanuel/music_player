@@ -179,7 +179,7 @@ class _PlaylistState extends State<Playlist> {
             )
           ]),
         ),
-        const MiniPlayer()
+        const MiniPlayer(),
       ]),
     );
   }

@@ -32,6 +32,7 @@ import 'package:music_player/features/music/presentation/bloc/settings_bloc/sett
 import 'package:on_audio_query/on_audio_query.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'features/music/presentation/bloc/player_position_cubit/player_position_cubit.dart';
 import 'features/music/services/audio_handler.dart';
 
 final sl = GetIt.instance;
@@ -64,6 +65,9 @@ Future<void> init() async {
 
   // player_bloc
   sl.registerFactory(() => PlayerBloc(sl()));
+
+  // player_position_cubit
+  sl.registerFactory(() => PlayerPositionCubit());
 
   // usecases
 

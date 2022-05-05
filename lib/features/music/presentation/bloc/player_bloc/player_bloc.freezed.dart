@@ -22,17 +22,21 @@ class _$PlayerStateTearOff {
       required List<Music> queue,
       required int currentIndex,
       required Duration songDuration,
-      required Duration currentPositioin,
+      required Duration currentPosition,
+      required Duration bufferedPosition,
       required AudioServiceShuffleMode shuffleMode,
-      required AudioServiceRepeatMode repeatMode}) {
+      required AudioServiceRepeatMode repeatMode,
+      required Option<Uint8List> musicArt}) {
     return _PlayerState(
       isPlaying: isPlaying,
       queue: queue,
       currentIndex: currentIndex,
       songDuration: songDuration,
-      currentPositioin: currentPositioin,
+      currentPosition: currentPosition,
+      bufferedPosition: bufferedPosition,
       shuffleMode: shuffleMode,
       repeatMode: repeatMode,
+      musicArt: musicArt,
     );
   }
 }
@@ -46,9 +50,11 @@ mixin _$PlayerState {
   List<Music> get queue => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
   Duration get songDuration => throw _privateConstructorUsedError;
-  Duration get currentPositioin => throw _privateConstructorUsedError;
+  Duration get currentPosition => throw _privateConstructorUsedError;
+  Duration get bufferedPosition => throw _privateConstructorUsedError;
   AudioServiceShuffleMode get shuffleMode => throw _privateConstructorUsedError;
   AudioServiceRepeatMode get repeatMode => throw _privateConstructorUsedError;
+  Option<Uint8List> get musicArt => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PlayerStateCopyWith<PlayerState> get copyWith =>
@@ -65,9 +71,11 @@ abstract class $PlayerStateCopyWith<$Res> {
       List<Music> queue,
       int currentIndex,
       Duration songDuration,
-      Duration currentPositioin,
+      Duration currentPosition,
+      Duration bufferedPosition,
       AudioServiceShuffleMode shuffleMode,
-      AudioServiceRepeatMode repeatMode});
+      AudioServiceRepeatMode repeatMode,
+      Option<Uint8List> musicArt});
 }
 
 /// @nodoc
@@ -84,9 +92,11 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
     Object? queue = freezed,
     Object? currentIndex = freezed,
     Object? songDuration = freezed,
-    Object? currentPositioin = freezed,
+    Object? currentPosition = freezed,
+    Object? bufferedPosition = freezed,
     Object? shuffleMode = freezed,
     Object? repeatMode = freezed,
+    Object? musicArt = freezed,
   }) {
     return _then(_value.copyWith(
       isPlaying: isPlaying == freezed
@@ -105,9 +115,13 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      currentPositioin: currentPositioin == freezed
-          ? _value.currentPositioin
-          : currentPositioin // ignore: cast_nullable_to_non_nullable
+      currentPosition: currentPosition == freezed
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      bufferedPosition: bufferedPosition == freezed
+          ? _value.bufferedPosition
+          : bufferedPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
       shuffleMode: shuffleMode == freezed
           ? _value.shuffleMode
@@ -117,6 +131,10 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
           ? _value.repeatMode
           : repeatMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceRepeatMode,
+      musicArt: musicArt == freezed
+          ? _value.musicArt
+          : musicArt // ignore: cast_nullable_to_non_nullable
+              as Option<Uint8List>,
     ));
   }
 }
@@ -133,9 +151,11 @@ abstract class _$PlayerStateCopyWith<$Res>
       List<Music> queue,
       int currentIndex,
       Duration songDuration,
-      Duration currentPositioin,
+      Duration currentPosition,
+      Duration bufferedPosition,
       AudioServiceShuffleMode shuffleMode,
-      AudioServiceRepeatMode repeatMode});
+      AudioServiceRepeatMode repeatMode,
+      Option<Uint8List> musicArt});
 }
 
 /// @nodoc
@@ -154,9 +174,11 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
     Object? queue = freezed,
     Object? currentIndex = freezed,
     Object? songDuration = freezed,
-    Object? currentPositioin = freezed,
+    Object? currentPosition = freezed,
+    Object? bufferedPosition = freezed,
     Object? shuffleMode = freezed,
     Object? repeatMode = freezed,
+    Object? musicArt = freezed,
   }) {
     return _then(_PlayerState(
       isPlaying: isPlaying == freezed
@@ -175,9 +197,13 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      currentPositioin: currentPositioin == freezed
-          ? _value.currentPositioin
-          : currentPositioin // ignore: cast_nullable_to_non_nullable
+      currentPosition: currentPosition == freezed
+          ? _value.currentPosition
+          : currentPosition // ignore: cast_nullable_to_non_nullable
+              as Duration,
+      bufferedPosition: bufferedPosition == freezed
+          ? _value.bufferedPosition
+          : bufferedPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
       shuffleMode: shuffleMode == freezed
           ? _value.shuffleMode
@@ -187,6 +213,10 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
           ? _value.repeatMode
           : repeatMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceRepeatMode,
+      musicArt: musicArt == freezed
+          ? _value.musicArt
+          : musicArt // ignore: cast_nullable_to_non_nullable
+              as Option<Uint8List>,
     ));
   }
 }
@@ -199,9 +229,11 @@ class _$_PlayerState implements _PlayerState {
       required this.queue,
       required this.currentIndex,
       required this.songDuration,
-      required this.currentPositioin,
+      required this.currentPosition,
+      required this.bufferedPosition,
       required this.shuffleMode,
-      required this.repeatMode});
+      required this.repeatMode,
+      required this.musicArt});
 
   @override
   final bool isPlaying;
@@ -212,15 +244,19 @@ class _$_PlayerState implements _PlayerState {
   @override
   final Duration songDuration;
   @override
-  final Duration currentPositioin;
+  final Duration currentPosition;
+  @override
+  final Duration bufferedPosition;
   @override
   final AudioServiceShuffleMode shuffleMode;
   @override
   final AudioServiceRepeatMode repeatMode;
+  @override
+  final Option<Uint8List> musicArt;
 
   @override
   String toString() {
-    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex, songDuration: $songDuration, currentPositioin: $currentPositioin, shuffleMode: $shuffleMode, repeatMode: $repeatMode)';
+    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex, songDuration: $songDuration, currentPosition: $currentPosition, bufferedPosition: $bufferedPosition, shuffleMode: $shuffleMode, repeatMode: $repeatMode, musicArt: $musicArt)';
   }
 
   @override
@@ -235,11 +271,14 @@ class _$_PlayerState implements _PlayerState {
             const DeepCollectionEquality()
                 .equals(other.songDuration, songDuration) &&
             const DeepCollectionEquality()
-                .equals(other.currentPositioin, currentPositioin) &&
+                .equals(other.currentPosition, currentPosition) &&
+            const DeepCollectionEquality()
+                .equals(other.bufferedPosition, bufferedPosition) &&
             const DeepCollectionEquality()
                 .equals(other.shuffleMode, shuffleMode) &&
             const DeepCollectionEquality()
-                .equals(other.repeatMode, repeatMode));
+                .equals(other.repeatMode, repeatMode) &&
+            const DeepCollectionEquality().equals(other.musicArt, musicArt));
   }
 
   @override
@@ -249,9 +288,11 @@ class _$_PlayerState implements _PlayerState {
       const DeepCollectionEquality().hash(queue),
       const DeepCollectionEquality().hash(currentIndex),
       const DeepCollectionEquality().hash(songDuration),
-      const DeepCollectionEquality().hash(currentPositioin),
+      const DeepCollectionEquality().hash(currentPosition),
+      const DeepCollectionEquality().hash(bufferedPosition),
       const DeepCollectionEquality().hash(shuffleMode),
-      const DeepCollectionEquality().hash(repeatMode));
+      const DeepCollectionEquality().hash(repeatMode),
+      const DeepCollectionEquality().hash(musicArt));
 
   @JsonKey(ignore: true)
   @override
@@ -265,9 +306,11 @@ abstract class _PlayerState implements PlayerState {
       required List<Music> queue,
       required int currentIndex,
       required Duration songDuration,
-      required Duration currentPositioin,
+      required Duration currentPosition,
+      required Duration bufferedPosition,
       required AudioServiceShuffleMode shuffleMode,
-      required AudioServiceRepeatMode repeatMode}) = _$_PlayerState;
+      required AudioServiceRepeatMode repeatMode,
+      required Option<Uint8List> musicArt}) = _$_PlayerState;
 
   @override
   bool get isPlaying;
@@ -278,11 +321,15 @@ abstract class _PlayerState implements PlayerState {
   @override
   Duration get songDuration;
   @override
-  Duration get currentPositioin;
+  Duration get currentPosition;
+  @override
+  Duration get bufferedPosition;
   @override
   AudioServiceShuffleMode get shuffleMode;
   @override
   AudioServiceRepeatMode get repeatMode;
+  @override
+  Option<Uint8List> get musicArt;
   @override
   @JsonKey(ignore: true)
   _$PlayerStateCopyWith<_PlayerState> get copyWith =>

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:audio_service/audio_service.dart';
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/core/utilities/helper_functions.dart';
@@ -17,7 +19,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
   late final StreamSubscription playbackstateSubscription;
   late final StreamSubscription queueSubscription;
   late final StreamSubscription<MediaItem?> mediaItemSubscription;
-  late final StreamSubscription positionSubscription;
+
+  @override
+  Future<void> close() {
+    playbackstateSubscription.cancel();
+    queueSubscription.cancel();
+    mediaItemSubscription.cancel();
+    return super.close();
+  }
+
   PlayerBloc(this._audioHandler) : super(PlayerState.initial()) {
     // Stream Subscriptions
 
@@ -34,17 +44,19 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       add(QueueEvent(musicList: mediaItemToMusic(playlist)));
     });
 
-    mediaItemSubscription = _audioHandler.mediaItem.listen((mediaItem) {
+    mediaItemSubscription = _audioHandler.mediaItem.listen((mediaItem) async {
       if (mediaItem != null) {
-        add(MediaItemEvent(songDurarion: mediaItem.duration ?? Duration.zero));
+        // mediaItems are not the same
+        var musicArt = await getArtWork(state.queue[state.currentIndex].id);
+        add(MediaItemEvent(
+            songDurarion: mediaItem.duration ?? Duration.zero,
+            musicArt: musicArt != null ? some(musicArt) : none()));
       }
     });
 
-    positionSubscription = AudioService.position.listen((position) {
-      add(PositionEvent(currentPosition: position));
-    });
-
     // bloc Events
+
+    // audio service events
     on<LoadPlaylistEvent>((event, emit) async {
       Map<String, dynamic> items = {};
       items['newQueue'] = event.mediaItems;
@@ -68,22 +80,15 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     });
 
     on<MediaItemEvent>((event, emit) {
-      emit(state.copyWith(songDuration: event.songDurarion));
+      emit(state.copyWith(
+          songDuration: event.songDurarion, musicArt: event.musicArt));
     });
 
     on<PositionEvent>((event, emit) {
-      emit(state.copyWith(currentPositioin: event.currentPosition));
+      emit(state.copyWith(currentPosition: event.currentPosition));
     });
 
-    on<SetShuffleMode>((event, emit) {
-      _audioHandler.setShuffleMode(event.shuffleMode);
-    });
-
-    on<SetRepeatMode>((event, emit) {
-      _audioHandler.setRepeatMode(event.repeatMode);
-    });
-
-    // controls events
+    // player controls events
     on<Play>((event, emit) {
       _audioHandler.play();
     });
@@ -112,13 +117,17 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     on<Seek>((event, emit) {
       _audioHandler.seek(event.position);
     });
-  }
 
-  @override
-  Future<void> close() {
-    playbackstateSubscription.cancel();
-    queueSubscription.cancel();
-    mediaItemSubscription.cancel();
-    return super.close();
+    on<SetShuffleMode>((event, emit) {
+      if (state.shuffleMode == AudioServiceShuffleMode.none) {
+        _audioHandler.setShuffleMode(AudioServiceShuffleMode.all);
+      } else {
+        _audioHandler.setShuffleMode(AudioServiceShuffleMode.none);
+      }
+    });
+
+    on<SetRepeatMode>((event, emit) {
+      _audioHandler.setRepeatMode(event.repeatMode);
+    });
   }
 }

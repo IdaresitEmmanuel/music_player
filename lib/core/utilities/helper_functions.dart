@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:audio_service/audio_service.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/service_locator.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -36,6 +37,7 @@ List<MediaItem> musicToMediaItem(List<Music> music) {
               title: song.title,
               artist: song.artist,
               album: song.album,
+              duration: Duration(milliseconds: song.duration!),
               // artUri: Ur,
               extras: {
                 'uri': Uri.parse(song.uri!),

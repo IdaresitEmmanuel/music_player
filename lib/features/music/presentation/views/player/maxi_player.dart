@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:audio_service/audio_service.dart';
@@ -8,9 +7,12 @@ import 'package:marquee/marquee.dart';
 import 'package:music_player/core/utilities/helper_functions.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/presentation/bloc/player_bloc/player_bloc.dart';
+import 'package:music_player/features/music/presentation/bloc/player_position_cubit/player_position_cubit.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/player/equalizer.dart';
 import 'package:music_player/features/music/presentation/views/player/queue.dart';
+
+import '../../../../../service_locator.dart';
 
 class MaxiPlayer extends StatefulWidget {
   const MaxiPlayer({Key? key}) : super(key: key);
@@ -20,27 +22,6 @@ class MaxiPlayer extends StatefulWidget {
 }
 
 class _MaxiPlayerState extends State<MaxiPlayer> {
-  late final StreamSubscription playerBlocStream;
-  final ValueNotifier<int> thumbnailNotifier = ValueNotifier(0);
-
-  @override
-  void initState() {
-    playerBlocStream = context.read<PlayerBloc>().stream.listen((state) {
-      var music = state.queue[state.currentIndex];
-      if (music.id != thumbnailNotifier.value) {
-        thumbnailNotifier.value = music.id;
-      }
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    playerBlocStream.cancel();
-    thumbnailNotifier.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,32 +54,30 @@ class _MaxiPlayerState extends State<MaxiPlayer> {
                     decoration: BoxDecoration(
                         color: Theme.of(context).cardColor,
                         borderRadius: BorderRadius.circular(20.0)),
-                    child: ValueListenableBuilder(
-                      valueListenable: thumbnailNotifier,
-                      builder: (context, int albumId, child) {
-                        return FutureBuilder(
-                            future: getArtWork(albumId),
-                            builder: (context, snapshot) {
-                              if (snapshot.hasData) {
-                                return ClipRRect(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  child: Image.memory(
-                                    snapshot.data as Uint8List,
-                                    fit: BoxFit.cover,
-                                    width: double.maxFinite,
-                                    height: double.maxFinite,
-                                  ),
-                                );
-                              }
+                    child: BlocBuilder<PlayerBloc, PlayerState>(
+                      builder: (bc, state) {
+                        if (state.musicArt.isSome()) {
+                          var musicArt =
+                              state.musicArt.getOrElse(() => Uint8List(0));
 
-                              return SizedBox(
-                                width: double.maxFinite,
-                                height: double.maxFinite,
-                                child: Icon(Icons.headphones_rounded,
-                                    size: 100.0,
-                                    color: Theme.of(context).iconTheme.color),
-                              );
-                            });
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.memory(
+                              musicArt,
+                              fit: BoxFit.cover,
+                              width: double.maxFinite,
+                              height: double.maxFinite,
+                            ),
+                          );
+                        }
+
+                        return SizedBox(
+                          width: double.maxFinite,
+                          height: double.maxFinite,
+                          child: Icon(Icons.headphones_rounded,
+                              size: 100.0,
+                              color: Theme.of(context).iconTheme.color),
+                        );
                       },
                     ),
                   ),
@@ -161,10 +140,16 @@ class Controlls extends StatelessWidget {
               return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                        getDurationString(
-                            state.currentPositioin.inMilliseconds.toDouble()),
-                        style: const TextStyle(fontWeight: FontWeight.w500)),
+                    BlocBuilder<PlayerPositionCubit, PlayerPositionState>(
+                      bloc: sl<PlayerPositionCubit>(),
+                      builder: (context, pState) {
+                        return Text(
+                            getDurationString(
+                                pState.position.inMilliseconds.toDouble()),
+                            style:
+                                const TextStyle(fontWeight: FontWeight.w500));
+                      },
+                    ),
                     Text(
                         getDurationString(
                             state.songDuration.inMilliseconds.toDouble()),
@@ -173,32 +158,35 @@ class Controlls extends StatelessWidget {
             },
           ),
         ),
-        BlocBuilder<PlayerBloc, PlayerState>(
-          builder: (context, state) {
-            return Container(
-              margin:
-                  EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
-              child: SliderTheme(
-                data: SliderThemeData(
-                    trackShape: CustomTrackShape(), trackHeight: 0.5),
-                child: Slider(
-                  value: getMilliSeconds(state.currentPositioin) <=
-                          getMilliSeconds(state.songDuration)
-                      ? getMilliSeconds(state.currentPositioin)
-                      : getMilliSeconds(state.songDuration),
-                  min: getMilliSeconds(Duration.zero),
-                  max: getMilliSeconds(state.songDuration),
-                  onChanged: (value) {
-                    if (state.queue.isNotEmpty) {
-                      context.read<PlayerBloc>().add(Seek(
-                          position: Duration(milliseconds: value.round())));
-                    }
-                  },
+        BlocBuilder<PlayerBloc, PlayerState>(builder: (context, state) {
+          return BlocBuilder<PlayerPositionCubit, PlayerPositionState>(
+            bloc: sl<PlayerPositionCubit>(),
+            builder: (context, pState) {
+              return Container(
+                margin:
+                    EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
+                child: SliderTheme(
+                  data: SliderThemeData(
+                      trackShape: CustomTrackShape(), trackHeight: 0.5),
+                  child: Slider(
+                    value: getMilliSeconds(pState.position) <=
+                            getMilliSeconds(state.songDuration)
+                        ? getMilliSeconds(pState.position)
+                        : getMilliSeconds(state.songDuration),
+                    min: getMilliSeconds(Duration.zero),
+                    max: getMilliSeconds(state.songDuration),
+                    onChanged: (value) {
+                      if (state.queue.isNotEmpty) {
+                        context.read<PlayerBloc>().add(Seek(
+                            position: Duration(milliseconds: value.round())));
+                      }
+                    },
+                  ),
                 ),
-              ),
-            );
-          },
-        ),
+              );
+            },
+          );
+        }),
         const MediaButtons(),
         Container(
           margin: EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
@@ -247,15 +235,7 @@ class MediaButtons extends StatelessWidget {
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
             GestureDetector(
-              onTap: () {
-                if (state.shuffleMode == AudioServiceShuffleMode.none) {
-                  context.read<PlayerBloc>().add(
-                      SetShuffleMode(shuffleMode: AudioServiceShuffleMode.all));
-                } else {
-                  context.read<PlayerBloc>().add(SetShuffleMode(
-                      shuffleMode: AudioServiceShuffleMode.none));
-                }
-              },
+              onTap: () => context.read<PlayerBloc>().add(SetShuffleMode()),
               child: Icon(
                 Icons.shuffle_rounded,
                 size: 30,

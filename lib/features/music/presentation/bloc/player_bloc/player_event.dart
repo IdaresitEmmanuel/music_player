@@ -35,7 +35,8 @@ class QueueEvent extends PlayerEvent {
 
 class MediaItemEvent extends PlayerEvent {
   final Duration songDurarion;
-  MediaItemEvent({required this.songDurarion});
+  final Option<Uint8List> musicArt;
+  MediaItemEvent({required this.songDurarion, required this.musicArt});
 }
 
 class PositionEvent extends PlayerEvent {
@@ -49,8 +50,7 @@ class Seek extends PlayerEvent {
 }
 
 class SetShuffleMode extends PlayerEvent {
-  final AudioServiceShuffleMode shuffleMode;
-  SetShuffleMode({required this.shuffleMode});
+  SetShuffleMode();
 }
 
 class SetRepeatMode extends PlayerEvent {

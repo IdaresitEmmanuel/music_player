@@ -18,38 +18,11 @@ class MiniPlayer extends StatefulWidget {
 }
 
 class _MiniPlayerState extends State<MiniPlayer> {
-  late final StreamSubscription playerBlocStream;
-  final ValueNotifier<int> thumbnailNotifier = ValueNotifier(0);
-  final ValueNotifier<bool> visibleNotifier = ValueNotifier(false);
-
-  @override
-  void initState() {
-    playerBlocStream = context.read<PlayerBloc>().stream.listen((state) {
-      if (state.queue.isNotEmpty) {
-        var music = state.queue[state.currentIndex];
-        if (music.id != thumbnailNotifier.value) {
-          thumbnailNotifier.value = music.id;
-        }
-      }
-      visibleNotifier.value = state.queue.isNotEmpty;
-    });
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    visibleNotifier.dispose();
-    thumbnailNotifier.dispose();
-    playerBlocStream.cancel();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: visibleNotifier,
-      builder: (context, bool visible, child) {
-        return !visible
+    return BlocBuilder<PlayerBloc, PlayerState>(
+      builder: (bc, state) {
+        return state.queue.isEmpty
             ? const SizedBox.shrink()
             : GestureDetector(
                 onTap: () => Navigator.of(context).push(
@@ -62,28 +35,22 @@ class _MiniPlayerState extends State<MiniPlayer> {
                   color: Theme.of(context).cardColor,
                   child: Row(
                     children: [
-                      ValueListenableBuilder(
-                        valueListenable: thumbnailNotifier,
-                        builder: (context, int id, child) {
-                          // final song = state.queue[state.currentIndex];
-                          return FutureBuilder(
-                              future: getArtWork(id),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return SizedBox(
-                                    height: 40,
-                                    width: 40,
-                                    child: ClipOval(
-                                      child: Image.memory(
-                                          snapshot.data as Uint8List,
-                                          fit: BoxFit.cover),
-                                    ),
-                                  );
-                                }
-
-                                return Icon(Icons.music_note,
-                                    color: Theme.of(context).iconTheme.color);
-                              });
+                      Builder(
+                        builder: (context) {
+                          if (state.musicArt.isSome()) {
+                            var musicArt =
+                                state.musicArt.getOrElse(() => Uint8List(0));
+                            return SizedBox(
+                              height: 40,
+                              width: 40,
+                              child: ClipOval(
+                                child:
+                                    Image.memory(musicArt, fit: BoxFit.cover),
+                              ),
+                            );
+                          }
+                          return Icon(Icons.music_note,
+                              color: Theme.of(context).iconTheme.color);
                         },
                       ),
                       const SizedBox(width: 10.0),
