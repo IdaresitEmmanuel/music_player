@@ -21,6 +21,7 @@ class _$PlayerStateTearOff {
       {required bool isPlaying,
       required List<Music> queue,
       required int currentIndex,
+      required int? currentMusicId,
       required Duration songDuration,
       required Duration currentPosition,
       required Duration bufferedPosition,
@@ -31,6 +32,7 @@ class _$PlayerStateTearOff {
       isPlaying: isPlaying,
       queue: queue,
       currentIndex: currentIndex,
+      currentMusicId: currentMusicId,
       songDuration: songDuration,
       currentPosition: currentPosition,
       bufferedPosition: bufferedPosition,
@@ -49,6 +51,7 @@ mixin _$PlayerState {
   bool get isPlaying => throw _privateConstructorUsedError;
   List<Music> get queue => throw _privateConstructorUsedError;
   int get currentIndex => throw _privateConstructorUsedError;
+  int? get currentMusicId => throw _privateConstructorUsedError;
   Duration get songDuration => throw _privateConstructorUsedError;
   Duration get currentPosition => throw _privateConstructorUsedError;
   Duration get bufferedPosition => throw _privateConstructorUsedError;
@@ -70,6 +73,7 @@ abstract class $PlayerStateCopyWith<$Res> {
       {bool isPlaying,
       List<Music> queue,
       int currentIndex,
+      int? currentMusicId,
       Duration songDuration,
       Duration currentPosition,
       Duration bufferedPosition,
@@ -91,6 +95,7 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
     Object? isPlaying = freezed,
     Object? queue = freezed,
     Object? currentIndex = freezed,
+    Object? currentMusicId = freezed,
     Object? songDuration = freezed,
     Object? currentPosition = freezed,
     Object? bufferedPosition = freezed,
@@ -111,6 +116,10 @@ class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      currentMusicId: currentMusicId == freezed
+          ? _value.currentMusicId
+          : currentMusicId // ignore: cast_nullable_to_non_nullable
+              as int?,
       songDuration: songDuration == freezed
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
@@ -150,6 +159,7 @@ abstract class _$PlayerStateCopyWith<$Res>
       {bool isPlaying,
       List<Music> queue,
       int currentIndex,
+      int? currentMusicId,
       Duration songDuration,
       Duration currentPosition,
       Duration bufferedPosition,
@@ -173,6 +183,7 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
     Object? isPlaying = freezed,
     Object? queue = freezed,
     Object? currentIndex = freezed,
+    Object? currentMusicId = freezed,
     Object? songDuration = freezed,
     Object? currentPosition = freezed,
     Object? bufferedPosition = freezed,
@@ -193,6 +204,10 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      currentMusicId: currentMusicId == freezed
+          ? _value.currentMusicId
+          : currentMusicId // ignore: cast_nullable_to_non_nullable
+              as int?,
       songDuration: songDuration == freezed
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
@@ -228,6 +243,7 @@ class _$_PlayerState implements _PlayerState {
       {required this.isPlaying,
       required this.queue,
       required this.currentIndex,
+      required this.currentMusicId,
       required this.songDuration,
       required this.currentPosition,
       required this.bufferedPosition,
@@ -241,6 +257,8 @@ class _$_PlayerState implements _PlayerState {
   final List<Music> queue;
   @override
   final int currentIndex;
+  @override
+  final int? currentMusicId;
   @override
   final Duration songDuration;
   @override
@@ -256,7 +274,7 @@ class _$_PlayerState implements _PlayerState {
 
   @override
   String toString() {
-    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex, songDuration: $songDuration, currentPosition: $currentPosition, bufferedPosition: $bufferedPosition, shuffleMode: $shuffleMode, repeatMode: $repeatMode, musicArt: $musicArt)';
+    return 'PlayerState(isPlaying: $isPlaying, queue: $queue, currentIndex: $currentIndex, currentMusicId: $currentMusicId, songDuration: $songDuration, currentPosition: $currentPosition, bufferedPosition: $bufferedPosition, shuffleMode: $shuffleMode, repeatMode: $repeatMode, musicArt: $musicArt)';
   }
 
   @override
@@ -268,6 +286,8 @@ class _$_PlayerState implements _PlayerState {
             const DeepCollectionEquality().equals(other.queue, queue) &&
             const DeepCollectionEquality()
                 .equals(other.currentIndex, currentIndex) &&
+            const DeepCollectionEquality()
+                .equals(other.currentMusicId, currentMusicId) &&
             const DeepCollectionEquality()
                 .equals(other.songDuration, songDuration) &&
             const DeepCollectionEquality()
@@ -287,6 +307,7 @@ class _$_PlayerState implements _PlayerState {
       const DeepCollectionEquality().hash(isPlaying),
       const DeepCollectionEquality().hash(queue),
       const DeepCollectionEquality().hash(currentIndex),
+      const DeepCollectionEquality().hash(currentMusicId),
       const DeepCollectionEquality().hash(songDuration),
       const DeepCollectionEquality().hash(currentPosition),
       const DeepCollectionEquality().hash(bufferedPosition),
@@ -305,6 +326,7 @@ abstract class _PlayerState implements PlayerState {
       {required bool isPlaying,
       required List<Music> queue,
       required int currentIndex,
+      required int? currentMusicId,
       required Duration songDuration,
       required Duration currentPosition,
       required Duration bufferedPosition,
@@ -318,6 +340,8 @@ abstract class _PlayerState implements PlayerState {
   List<Music> get queue;
   @override
   int get currentIndex;
+  @override
+  int? get currentMusicId;
   @override
   Duration get songDuration;
   @override

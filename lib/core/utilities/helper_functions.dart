@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:audio_service/audio_service.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/service_locator.dart';
 import 'package:on_audio_query/on_audio_query.dart';

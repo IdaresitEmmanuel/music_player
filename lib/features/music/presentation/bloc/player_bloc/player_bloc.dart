@@ -34,10 +34,13 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
     playbackstateSubscription =
         _audioHandler.playbackState.listen((playbackState) {
       var index = playbackState.queueIndex ?? 0;
+      var id = state.queue.isNotEmpty ? state.queue[index].id : 0;
       add(PlayStateEvent(
           isPlaying: playbackState.playing,
           currentIndex: index,
-          shuffleMode: playbackState.shuffleMode));
+          currentId: id,
+          shuffleMode: playbackState.shuffleMode,
+          repeatMode: playbackState.repeatMode));
     });
 
     queueSubscription = _audioHandler.queue.listen((playlist) {
@@ -62,7 +65,7 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       items['newQueue'] = event.mediaItems;
       items['currentIndex'] = event.index;
       await _audioHandler.customAction(
-          KeyManager.newPlaylistKey.toString(), items);
+          CustomAction.newPlaylistKey.toString(), items);
     });
 
     on<PlayStateEvent>((event, emit) {
@@ -70,7 +73,9 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
         state.copyWith(
           isPlaying: event.isPlaying,
           currentIndex: event.currentIndex,
+          currentMusicId: event.currentId,
           shuffleMode: event.shuffleMode,
+          repeatMode: event.repeatMode,
         ),
       );
     });
@@ -114,20 +119,64 @@ class PlayerBloc extends Bloc<PlayerEvent, PlayerState> {
       _audioHandler.skipToNext();
     });
 
+    on<SkipToQueueItem>((event, emit) {
+      if (event.index != state.currentIndex) {
+        _audioHandler.skipToQueueItem(event.index);
+      }
+    });
+
     on<Seek>((event, emit) {
       _audioHandler.seek(event.position);
     });
 
-    on<SetShuffleMode>((event, emit) {
+    on<SetShuffleMode>((event, emit) async {
       if (state.shuffleMode == AudioServiceShuffleMode.none) {
-        _audioHandler.setShuffleMode(AudioServiceShuffleMode.all);
+        await _audioHandler.setShuffleMode(AudioServiceShuffleMode.all);
       } else {
-        _audioHandler.setShuffleMode(AudioServiceShuffleMode.none);
+        await _audioHandler.setShuffleMode(AudioServiceShuffleMode.none);
       }
     });
 
     on<SetRepeatMode>((event, emit) {
-      _audioHandler.setRepeatMode(event.repeatMode);
+      switch (state.repeatMode) {
+        case AudioServiceRepeatMode.none:
+          {
+            _audioHandler.setRepeatMode(AudioServiceRepeatMode.all);
+          }
+          break;
+        case AudioServiceRepeatMode.group:
+        case AudioServiceRepeatMode.all:
+          {
+            _audioHandler.setRepeatMode(AudioServiceRepeatMode.one);
+          }
+          break;
+
+        case AudioServiceRepeatMode.one:
+          {
+            _audioHandler.setRepeatMode(AudioServiceRepeatMode.none);
+          }
+          break;
+      } // end switch
+    });
+
+    on<ReorderQueue>((event, emit) {
+      final nIndex =
+          event.newIndex > event.oldIndex ? event.newIndex - 1 : event.newIndex;
+      Map<String, dynamic> item = {};
+      item[Reorder.oldIndex.toString()] = event.oldIndex;
+      item[Reorder.newIndex.toString()] = nIndex;
+
+      _audioHandler.customAction(CustomAction.reorderList.toString(), item);
+    });
+
+    on<RemoveQueueItem>((event, emit) {
+      _audioHandler.removeQueueItemAt(event.index);
+    });
+
+    on<ClearQueue>((event, emit) {
+      // _audioHandler.customAction(CustomAction.clearList.toString());
+      emit(PlayerState.initial());
+      _audioHandler.stop();
     });
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_player/features/music/presentation/bloc/player_bloc/player_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 
+import '../../../domain/entities/music.dart';
+
 class Queue extends StatefulWidget {
   const Queue({Key? key}) : super(key: key);
 
@@ -33,49 +35,77 @@ class _QueueState extends State<Queue> {
                               fontSize: 20.0,
                               fontWeight: FontWeight.w500,
                             )),
-                        const Icon(Icons.delete_rounded)
+                        GestureDetector(
+                            onTap: () =>
+                                context.read<PlayerBloc>().add(ClearQueue()),
+                            child: const Icon(Icons.delete_rounded))
                       ]),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                      itemCount: state.queue.length,
-                      itemBuilder: (context, index) {
-                        final music = state.queue[index];
-                        return ListTile(
-                          leading: const Icon(Icons.drag_handle_rounded),
-                          title: Text(
-                            music.title,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: state.currentIndex == index
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .color),
-                          ),
-                          subtitle: Text(
-                            music.artist ?? "<unknown>",
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                                color: state.currentIndex == index
-                                    ? Theme.of(context).primaryColor
-                                    : Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .color),
-                          ),
-                          trailing: const Icon(Icons.close_rounded),
-                        );
-                      }),
+                  child: state.queue.isEmpty
+                      ? const Center(child: Text("Queue is empty"))
+                      : ReorderableListView.builder(
+                          buildDefaultDragHandles: false,
+                          itemCount: state.queue.length,
+                          onReorder: (oldIndex, newIndex) => context
+                              .read<PlayerBloc>()
+                              .add(ReorderQueue(
+                                  oldIndex: oldIndex, newIndex: newIndex)),
+                          itemBuilder: (context, index) {
+                            final music = state.queue[index];
+                            return QueueItem(
+                                key: Key(music.id.toString()),
+                                index: index,
+                                music: music);
+                          }),
                 ),
               ],
             );
           },
         ),
       ),
+    );
+  }
+}
+
+class QueueItem extends StatelessWidget {
+  const QueueItem({Key? key, required this.music, required this.index})
+      : super(key: key);
+  final Music music;
+  final int index;
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      tileColor: Theme.of(context).scaffoldBackgroundColor,
+      onTap: () =>
+          context.read<PlayerBloc>().add(SkipToQueueItem(index: index)),
+      leading: ReorderableDragStartListener(
+        index: index,
+        child: Icon(Icons.drag_handle_rounded,
+            color: Theme.of(context).iconTheme.color),
+      ),
+      title: Text(
+        music.title,
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: context.read<PlayerBloc>().state.currentMusicId == music.id
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).textTheme.bodyLarge!.color),
+      ),
+      subtitle: Text(
+        music.artist ?? "<unknown>",
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+            color: context.read<PlayerBloc>().state.currentMusicId == music.id
+                ? Theme.of(context).primaryColor
+                : Theme.of(context).textTheme.bodyLarge!.color),
+      ),
+      trailing: GestureDetector(
+          onTap: () =>
+              context.read<PlayerBloc>().add(RemoveQueueItem(index: index)),
+          child: const Icon(Icons.close_rounded)),
     );
   }
 }

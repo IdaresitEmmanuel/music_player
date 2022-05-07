@@ -12,14 +12,49 @@ class SkipNext extends PlayerEvent {}
 
 class SkipPrevious extends PlayerEvent {}
 
+class Seek extends PlayerEvent {
+  final Duration position;
+  Seek({required this.position});
+}
+
+class SetShuffleMode extends PlayerEvent {
+  SetShuffleMode();
+}
+
+class SetRepeatMode extends PlayerEvent {
+  SetRepeatMode();
+}
+
+class SkipToQueueItem extends PlayerEvent {
+  final int index;
+  SkipToQueueItem({required this.index});
+}
+
+class ReorderQueue extends PlayerEvent {
+  final int oldIndex;
+  final int newIndex;
+  ReorderQueue({required this.oldIndex, required this.newIndex});
+}
+
+class RemoveQueueItem extends PlayerEvent {
+  final int index;
+  RemoveQueueItem({required this.index});
+}
+
+class ClearQueue extends PlayerEvent {}
+
 class PlayStateEvent extends PlayerEvent {
   final bool isPlaying;
   final int currentIndex;
+  final int currentId;
   final AudioServiceShuffleMode shuffleMode;
+  final AudioServiceRepeatMode repeatMode;
   PlayStateEvent(
       {required this.isPlaying,
       required this.currentIndex,
-      required this.shuffleMode});
+      required this.currentId,
+      required this.shuffleMode,
+      required this.repeatMode});
 }
 
 class LoadPlaylistEvent extends PlayerEvent {
@@ -42,18 +77,4 @@ class MediaItemEvent extends PlayerEvent {
 class PositionEvent extends PlayerEvent {
   final Duration currentPosition;
   PositionEvent({required this.currentPosition});
-}
-
-class Seek extends PlayerEvent {
-  final Duration position;
-  Seek({required this.position});
-}
-
-class SetShuffleMode extends PlayerEvent {
-  SetShuffleMode();
-}
-
-class SetRepeatMode extends PlayerEvent {
-  final AudioServiceRepeatMode repeatMode;
-  SetRepeatMode({required this.repeatMode});
 }

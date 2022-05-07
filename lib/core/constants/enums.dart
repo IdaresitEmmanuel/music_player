@@ -19,7 +19,9 @@ enum SearchCategory {
   folder,
 }
 
-enum KeyManager { newPlaylistKey }
+enum CustomAction { newPlaylistKey, reorderList, clearList }
+
+enum Reorder { oldIndex, newIndex }
 
 enum SongWidgetType {
   songs,

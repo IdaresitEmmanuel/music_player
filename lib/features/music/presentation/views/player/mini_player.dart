@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -7,8 +6,6 @@ import 'package:music_player/features/music/domain/entities/music.dart';
 import 'package:music_player/features/music/presentation/bloc/player_bloc/player_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/player/maxi_player.dart';
-
-import '../../../../../core/utilities/helper_functions.dart';
 
 class MiniPlayer extends StatefulWidget {
   const MiniPlayer({Key? key}) : super(key: key);
