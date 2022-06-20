@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_player/core/constants/enums.dart';
 import 'package:music_player/features/music/presentation/bloc/settings_bloc/settings_bloc.dart';
+import 'package:music_player/features/music/presentation/core/theme/colors.dart';
+import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/player/equalizer.dart';
 
 class NavigationDrawer extends StatefulWidget {
@@ -21,8 +23,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           child: ListView(
         children: [
           Container(
+            padding: EdgeInsets.symmetric(horizontal: AppDimentions.pageMargin),
             height: 100.0,
-            color: Colors.amber,
+            child: Row(children: [
+              CircleAvatar(
+                backgroundColor: AppColors.primaryColor,
+                child: Icon(
+                  Icons.graphic_eq_rounded,
+                  color: AppColors.iconColor,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text('Music Player', style: TextStyle(fontSize: 20))
+            ]),
           ),
           ListTile(
             leading: Icon(
