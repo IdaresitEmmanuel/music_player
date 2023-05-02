@@ -31,7 +31,7 @@ class _LibraryState extends State<Library> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
-        drawer: const NavigationDrawer(),
+        drawer: const AppDrawer(),
         drawerEnableOpenDragGesture: true,
         body: SafeArea(
             child: Column(

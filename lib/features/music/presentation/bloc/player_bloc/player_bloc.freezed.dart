@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'player_bloc.dart';
 
@@ -11,40 +12,7 @@ part of 'player_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PlayerStateTearOff {
-  const _$PlayerStateTearOff();
-
-  _PlayerState call(
-      {required bool isPlaying,
-      required List<Music> queue,
-      required int currentIndex,
-      required int? currentMusicId,
-      required Duration songDuration,
-      required Duration currentPosition,
-      required Duration bufferedPosition,
-      required AudioServiceShuffleMode shuffleMode,
-      required AudioServiceRepeatMode repeatMode,
-      required Option<Uint8List> musicArt}) {
-    return _PlayerState(
-      isPlaying: isPlaying,
-      queue: queue,
-      currentIndex: currentIndex,
-      currentMusicId: currentMusicId,
-      songDuration: songDuration,
-      currentPosition: currentPosition,
-      bufferedPosition: bufferedPosition,
-      shuffleMode: shuffleMode,
-      repeatMode: repeatMode,
-      musicArt: musicArt,
-    );
-  }
-}
-
-/// @nodoc
-const $PlayerState = _$PlayerStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PlayerState {
@@ -68,7 +36,8 @@ mixin _$PlayerState {
 abstract class $PlayerStateCopyWith<$Res> {
   factory $PlayerStateCopyWith(
           PlayerState value, $Res Function(PlayerState) then) =
-      _$PlayerStateCopyWithImpl<$Res>;
+      _$PlayerStateCopyWithImpl<$Res, PlayerState>;
+  @useResult
   $Res call(
       {bool isPlaying,
       List<Music> queue,
@@ -83,78 +52,82 @@ abstract class $PlayerStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$PlayerStateCopyWithImpl<$Res> implements $PlayerStateCopyWith<$Res> {
+class _$PlayerStateCopyWithImpl<$Res, $Val extends PlayerState>
+    implements $PlayerStateCopyWith<$Res> {
   _$PlayerStateCopyWithImpl(this._value, this._then);
 
-  final PlayerState _value;
   // ignore: unused_field
-  final $Res Function(PlayerState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isPlaying = freezed,
-    Object? queue = freezed,
-    Object? currentIndex = freezed,
+    Object? isPlaying = null,
+    Object? queue = null,
+    Object? currentIndex = null,
     Object? currentMusicId = freezed,
-    Object? songDuration = freezed,
-    Object? currentPosition = freezed,
-    Object? bufferedPosition = freezed,
-    Object? shuffleMode = freezed,
-    Object? repeatMode = freezed,
-    Object? musicArt = freezed,
+    Object? songDuration = null,
+    Object? currentPosition = null,
+    Object? bufferedPosition = null,
+    Object? shuffleMode = null,
+    Object? repeatMode = null,
+    Object? musicArt = null,
   }) {
     return _then(_value.copyWith(
-      isPlaying: isPlaying == freezed
+      isPlaying: null == isPlaying
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
               as bool,
-      queue: queue == freezed
+      queue: null == queue
           ? _value.queue
           : queue // ignore: cast_nullable_to_non_nullable
               as List<Music>,
-      currentIndex: currentIndex == freezed
+      currentIndex: null == currentIndex
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentMusicId: currentMusicId == freezed
+      currentMusicId: freezed == currentMusicId
           ? _value.currentMusicId
           : currentMusicId // ignore: cast_nullable_to_non_nullable
               as int?,
-      songDuration: songDuration == freezed
+      songDuration: null == songDuration
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      currentPosition: currentPosition == freezed
+      currentPosition: null == currentPosition
           ? _value.currentPosition
           : currentPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
-      bufferedPosition: bufferedPosition == freezed
+      bufferedPosition: null == bufferedPosition
           ? _value.bufferedPosition
           : bufferedPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
-      shuffleMode: shuffleMode == freezed
+      shuffleMode: null == shuffleMode
           ? _value.shuffleMode
           : shuffleMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceShuffleMode,
-      repeatMode: repeatMode == freezed
+      repeatMode: null == repeatMode
           ? _value.repeatMode
           : repeatMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceRepeatMode,
-      musicArt: musicArt == freezed
+      musicArt: null == musicArt
           ? _value.musicArt
           : musicArt // ignore: cast_nullable_to_non_nullable
               as Option<Uint8List>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PlayerStateCopyWith<$Res>
+abstract class _$$_PlayerStateCopyWith<$Res>
     implements $PlayerStateCopyWith<$Res> {
-  factory _$PlayerStateCopyWith(
-          _PlayerState value, $Res Function(_PlayerState) then) =
-      __$PlayerStateCopyWithImpl<$Res>;
+  factory _$$_PlayerStateCopyWith(
+          _$_PlayerState value, $Res Function(_$_PlayerState) then) =
+      __$$_PlayerStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {bool isPlaying,
       List<Music> queue,
@@ -169,66 +142,65 @@ abstract class _$PlayerStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
-    implements _$PlayerStateCopyWith<$Res> {
-  __$PlayerStateCopyWithImpl(
-      _PlayerState _value, $Res Function(_PlayerState) _then)
-      : super(_value, (v) => _then(v as _PlayerState));
+class __$$_PlayerStateCopyWithImpl<$Res>
+    extends _$PlayerStateCopyWithImpl<$Res, _$_PlayerState>
+    implements _$$_PlayerStateCopyWith<$Res> {
+  __$$_PlayerStateCopyWithImpl(
+      _$_PlayerState _value, $Res Function(_$_PlayerState) _then)
+      : super(_value, _then);
 
-  @override
-  _PlayerState get _value => super._value as _PlayerState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? isPlaying = freezed,
-    Object? queue = freezed,
-    Object? currentIndex = freezed,
+    Object? isPlaying = null,
+    Object? queue = null,
+    Object? currentIndex = null,
     Object? currentMusicId = freezed,
-    Object? songDuration = freezed,
-    Object? currentPosition = freezed,
-    Object? bufferedPosition = freezed,
-    Object? shuffleMode = freezed,
-    Object? repeatMode = freezed,
-    Object? musicArt = freezed,
+    Object? songDuration = null,
+    Object? currentPosition = null,
+    Object? bufferedPosition = null,
+    Object? shuffleMode = null,
+    Object? repeatMode = null,
+    Object? musicArt = null,
   }) {
-    return _then(_PlayerState(
-      isPlaying: isPlaying == freezed
+    return _then(_$_PlayerState(
+      isPlaying: null == isPlaying
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
               as bool,
-      queue: queue == freezed
-          ? _value.queue
+      queue: null == queue
+          ? _value._queue
           : queue // ignore: cast_nullable_to_non_nullable
               as List<Music>,
-      currentIndex: currentIndex == freezed
+      currentIndex: null == currentIndex
           ? _value.currentIndex
           : currentIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      currentMusicId: currentMusicId == freezed
+      currentMusicId: freezed == currentMusicId
           ? _value.currentMusicId
           : currentMusicId // ignore: cast_nullable_to_non_nullable
               as int?,
-      songDuration: songDuration == freezed
+      songDuration: null == songDuration
           ? _value.songDuration
           : songDuration // ignore: cast_nullable_to_non_nullable
               as Duration,
-      currentPosition: currentPosition == freezed
+      currentPosition: null == currentPosition
           ? _value.currentPosition
           : currentPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
-      bufferedPosition: bufferedPosition == freezed
+      bufferedPosition: null == bufferedPosition
           ? _value.bufferedPosition
           : bufferedPosition // ignore: cast_nullable_to_non_nullable
               as Duration,
-      shuffleMode: shuffleMode == freezed
+      shuffleMode: null == shuffleMode
           ? _value.shuffleMode
           : shuffleMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceShuffleMode,
-      repeatMode: repeatMode == freezed
+      repeatMode: null == repeatMode
           ? _value.repeatMode
           : repeatMode // ignore: cast_nullable_to_non_nullable
               as AudioServiceRepeatMode,
-      musicArt: musicArt == freezed
+      musicArt: null == musicArt
           ? _value.musicArt
           : musicArt // ignore: cast_nullable_to_non_nullable
               as Option<Uint8List>,
@@ -241,7 +213,7 @@ class __$PlayerStateCopyWithImpl<$Res> extends _$PlayerStateCopyWithImpl<$Res>
 class _$_PlayerState implements _PlayerState {
   const _$_PlayerState(
       {required this.isPlaying,
-      required this.queue,
+      required final List<Music> queue,
       required this.currentIndex,
       required this.currentMusicId,
       required this.songDuration,
@@ -249,12 +221,19 @@ class _$_PlayerState implements _PlayerState {
       required this.bufferedPosition,
       required this.shuffleMode,
       required this.repeatMode,
-      required this.musicArt});
+      required this.musicArt})
+      : _queue = queue;
 
   @override
   final bool isPlaying;
+  final List<Music> _queue;
   @override
-  final List<Music> queue;
+  List<Music> get queue {
+    if (_queue is EqualUnmodifiableListView) return _queue;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_queue);
+  }
+
   @override
   final int currentIndex;
   @override
@@ -281,58 +260,61 @@ class _$_PlayerState implements _PlayerState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PlayerState &&
-            const DeepCollectionEquality().equals(other.isPlaying, isPlaying) &&
-            const DeepCollectionEquality().equals(other.queue, queue) &&
-            const DeepCollectionEquality()
-                .equals(other.currentIndex, currentIndex) &&
-            const DeepCollectionEquality()
-                .equals(other.currentMusicId, currentMusicId) &&
-            const DeepCollectionEquality()
-                .equals(other.songDuration, songDuration) &&
-            const DeepCollectionEquality()
-                .equals(other.currentPosition, currentPosition) &&
-            const DeepCollectionEquality()
-                .equals(other.bufferedPosition, bufferedPosition) &&
-            const DeepCollectionEquality()
-                .equals(other.shuffleMode, shuffleMode) &&
-            const DeepCollectionEquality()
-                .equals(other.repeatMode, repeatMode) &&
-            const DeepCollectionEquality().equals(other.musicArt, musicArt));
+            other is _$_PlayerState &&
+            (identical(other.isPlaying, isPlaying) ||
+                other.isPlaying == isPlaying) &&
+            const DeepCollectionEquality().equals(other._queue, _queue) &&
+            (identical(other.currentIndex, currentIndex) ||
+                other.currentIndex == currentIndex) &&
+            (identical(other.currentMusicId, currentMusicId) ||
+                other.currentMusicId == currentMusicId) &&
+            (identical(other.songDuration, songDuration) ||
+                other.songDuration == songDuration) &&
+            (identical(other.currentPosition, currentPosition) ||
+                other.currentPosition == currentPosition) &&
+            (identical(other.bufferedPosition, bufferedPosition) ||
+                other.bufferedPosition == bufferedPosition) &&
+            (identical(other.shuffleMode, shuffleMode) ||
+                other.shuffleMode == shuffleMode) &&
+            (identical(other.repeatMode, repeatMode) ||
+                other.repeatMode == repeatMode) &&
+            (identical(other.musicArt, musicArt) ||
+                other.musicArt == musicArt));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(isPlaying),
-      const DeepCollectionEquality().hash(queue),
-      const DeepCollectionEquality().hash(currentIndex),
-      const DeepCollectionEquality().hash(currentMusicId),
-      const DeepCollectionEquality().hash(songDuration),
-      const DeepCollectionEquality().hash(currentPosition),
-      const DeepCollectionEquality().hash(bufferedPosition),
-      const DeepCollectionEquality().hash(shuffleMode),
-      const DeepCollectionEquality().hash(repeatMode),
-      const DeepCollectionEquality().hash(musicArt));
+      isPlaying,
+      const DeepCollectionEquality().hash(_queue),
+      currentIndex,
+      currentMusicId,
+      songDuration,
+      currentPosition,
+      bufferedPosition,
+      shuffleMode,
+      repeatMode,
+      musicArt);
 
   @JsonKey(ignore: true)
   @override
-  _$PlayerStateCopyWith<_PlayerState> get copyWith =>
-      __$PlayerStateCopyWithImpl<_PlayerState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_PlayerStateCopyWith<_$_PlayerState> get copyWith =>
+      __$$_PlayerStateCopyWithImpl<_$_PlayerState>(this, _$identity);
 }
 
 abstract class _PlayerState implements PlayerState {
   const factory _PlayerState(
-      {required bool isPlaying,
-      required List<Music> queue,
-      required int currentIndex,
-      required int? currentMusicId,
-      required Duration songDuration,
-      required Duration currentPosition,
-      required Duration bufferedPosition,
-      required AudioServiceShuffleMode shuffleMode,
-      required AudioServiceRepeatMode repeatMode,
-      required Option<Uint8List> musicArt}) = _$_PlayerState;
+      {required final bool isPlaying,
+      required final List<Music> queue,
+      required final int currentIndex,
+      required final int? currentMusicId,
+      required final Duration songDuration,
+      required final Duration currentPosition,
+      required final Duration bufferedPosition,
+      required final AudioServiceShuffleMode shuffleMode,
+      required final AudioServiceRepeatMode repeatMode,
+      required final Option<Uint8List> musicArt}) = _$_PlayerState;
 
   @override
   bool get isPlaying;
@@ -356,6 +338,6 @@ abstract class _PlayerState implements PlayerState {
   Option<Uint8List> get musicArt;
   @override
   @JsonKey(ignore: true)
-  _$PlayerStateCopyWith<_PlayerState> get copyWith =>
+  _$$_PlayerStateCopyWith<_$_PlayerState> get copyWith =>
       throw _privateConstructorUsedError;
 }

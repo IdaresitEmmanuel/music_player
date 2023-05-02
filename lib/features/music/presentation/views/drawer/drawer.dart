@@ -6,14 +6,14 @@ import 'package:music_player/features/music/presentation/core/theme/colors.dart'
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 import 'package:music_player/features/music/presentation/views/player/equalizer.dart';
 
-class NavigationDrawer extends StatefulWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+class AppDrawer extends StatefulWidget {
+  const AppDrawer({Key? key}) : super(key: key);
 
   @override
-  State<NavigationDrawer> createState() => _NavigationDrawerState();
+  State<AppDrawer> createState() => _AppDrawerState();
 }
 
-class _NavigationDrawerState extends State<NavigationDrawer> {
+class _AppDrawerState extends State<AppDrawer> {
   @override
   Widget build(BuildContext context) {
     return Container(

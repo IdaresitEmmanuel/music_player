@@ -72,6 +72,7 @@ class _SongPageState extends State<SongPage> {
                   debugPrint("there is a failure in retrieving all music");
                 } else {
                   debugPrint("there is no failurein retrieving music");
+                  debugPrint("number of songs ${state.musicList.length}");
                 }
               });
               return ListView.builder(
@@ -80,6 +81,7 @@ class _SongPageState extends State<SongPage> {
                 cacheExtent: state.musicList.length.toDouble(),
                 itemBuilder: (context, index) {
                   final music = state.musicList[index];
+
                   return SongWidget(song: music, index: index);
                 },
               );

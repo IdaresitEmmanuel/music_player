@@ -1,6 +1,7 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'playlist_bloc.dart';
 
@@ -11,23 +12,7 @@ part of 'playlist_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$PlaylistStateTearOff {
-  const _$PlaylistStateTearOff();
-
-  _PlaylistState call(
-      {required List<Music> musicList, required Option<Uint8List> image}) {
-    return _PlaylistState(
-      musicList: musicList,
-      image: image,
-    );
-  }
-}
-
-/// @nodoc
-const $PlaylistState = _$PlaylistStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$PlaylistState {
@@ -43,69 +28,71 @@ mixin _$PlaylistState {
 abstract class $PlaylistStateCopyWith<$Res> {
   factory $PlaylistStateCopyWith(
           PlaylistState value, $Res Function(PlaylistState) then) =
-      _$PlaylistStateCopyWithImpl<$Res>;
+      _$PlaylistStateCopyWithImpl<$Res, PlaylistState>;
+  @useResult
   $Res call({List<Music> musicList, Option<Uint8List> image});
 }
 
 /// @nodoc
-class _$PlaylistStateCopyWithImpl<$Res>
+class _$PlaylistStateCopyWithImpl<$Res, $Val extends PlaylistState>
     implements $PlaylistStateCopyWith<$Res> {
   _$PlaylistStateCopyWithImpl(this._value, this._then);
 
-  final PlaylistState _value;
   // ignore: unused_field
-  final $Res Function(PlaylistState) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? musicList = freezed,
-    Object? image = freezed,
+    Object? musicList = null,
+    Object? image = null,
   }) {
     return _then(_value.copyWith(
-      musicList: musicList == freezed
+      musicList: null == musicList
           ? _value.musicList
           : musicList // ignore: cast_nullable_to_non_nullable
               as List<Music>,
-      image: image == freezed
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as Option<Uint8List>,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$PlaylistStateCopyWith<$Res>
+abstract class _$$_PlaylistStateCopyWith<$Res>
     implements $PlaylistStateCopyWith<$Res> {
-  factory _$PlaylistStateCopyWith(
-          _PlaylistState value, $Res Function(_PlaylistState) then) =
-      __$PlaylistStateCopyWithImpl<$Res>;
+  factory _$$_PlaylistStateCopyWith(
+          _$_PlaylistState value, $Res Function(_$_PlaylistState) then) =
+      __$$_PlaylistStateCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({List<Music> musicList, Option<Uint8List> image});
 }
 
 /// @nodoc
-class __$PlaylistStateCopyWithImpl<$Res>
-    extends _$PlaylistStateCopyWithImpl<$Res>
-    implements _$PlaylistStateCopyWith<$Res> {
-  __$PlaylistStateCopyWithImpl(
-      _PlaylistState _value, $Res Function(_PlaylistState) _then)
-      : super(_value, (v) => _then(v as _PlaylistState));
+class __$$_PlaylistStateCopyWithImpl<$Res>
+    extends _$PlaylistStateCopyWithImpl<$Res, _$_PlaylistState>
+    implements _$$_PlaylistStateCopyWith<$Res> {
+  __$$_PlaylistStateCopyWithImpl(
+      _$_PlaylistState _value, $Res Function(_$_PlaylistState) _then)
+      : super(_value, _then);
 
-  @override
-  _PlaylistState get _value => super._value as _PlaylistState;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? musicList = freezed,
-    Object? image = freezed,
+    Object? musicList = null,
+    Object? image = null,
   }) {
-    return _then(_PlaylistState(
-      musicList: musicList == freezed
-          ? _value.musicList
+    return _then(_$_PlaylistState(
+      musicList: null == musicList
+          ? _value._musicList
           : musicList // ignore: cast_nullable_to_non_nullable
               as List<Music>,
-      image: image == freezed
+      image: null == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
               as Option<Uint8List>,
@@ -116,10 +103,18 @@ class __$PlaylistStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_PlaylistState implements _PlaylistState {
-  const _$_PlaylistState({required this.musicList, required this.image});
+  const _$_PlaylistState(
+      {required final List<Music> musicList, required this.image})
+      : _musicList = musicList;
 
+  final List<Music> _musicList;
   @override
-  final List<Music> musicList;
+  List<Music> get musicList {
+    if (_musicList is EqualUnmodifiableListView) return _musicList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_musicList);
+  }
+
   @override
   final Option<Uint8List> image;
 
@@ -132,27 +127,27 @@ class _$_PlaylistState implements _PlaylistState {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _PlaylistState &&
-            const DeepCollectionEquality().equals(other.musicList, musicList) &&
-            const DeepCollectionEquality().equals(other.image, image));
+            other is _$_PlaylistState &&
+            const DeepCollectionEquality()
+                .equals(other._musicList, _musicList) &&
+            (identical(other.image, image) || other.image == image));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(musicList),
-      const DeepCollectionEquality().hash(image));
+      runtimeType, const DeepCollectionEquality().hash(_musicList), image);
 
   @JsonKey(ignore: true)
   @override
-  _$PlaylistStateCopyWith<_PlaylistState> get copyWith =>
-      __$PlaylistStateCopyWithImpl<_PlaylistState>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$_PlaylistStateCopyWith<_$_PlaylistState> get copyWith =>
+      __$$_PlaylistStateCopyWithImpl<_$_PlaylistState>(this, _$identity);
 }
 
 abstract class _PlaylistState implements PlaylistState {
   const factory _PlaylistState(
-      {required List<Music> musicList,
-      required Option<Uint8List> image}) = _$_PlaylistState;
+      {required final List<Music> musicList,
+      required final Option<Uint8List> image}) = _$_PlaylistState;
 
   @override
   List<Music> get musicList;
@@ -160,6 +155,6 @@ abstract class _PlaylistState implements PlaylistState {
   Option<Uint8List> get image;
   @override
   @JsonKey(ignore: true)
-  _$PlaylistStateCopyWith<_PlaylistState> get copyWith =>
+  _$$_PlaylistStateCopyWith<_$_PlaylistState> get copyWith =>
       throw _privateConstructorUsedError;
 }
