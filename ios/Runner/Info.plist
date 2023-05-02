@@ -43,5 +43,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+  		<string>audio</string>
+	</array>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>$(PROJECT_NAME) requires access to media library</string>
 </dict>
 </plist>

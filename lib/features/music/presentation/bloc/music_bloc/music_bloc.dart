@@ -34,10 +34,13 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       : super(MusicState.initial()) {
     on<StartEvent>((event, emit) async {
       if (await requestStoragePermission()) {
+        log("Permission has been granted");
         add(GetMusicEvent());
         add(GetAlbumEvent());
         add(GetArtistEvent());
         add(GetFolderEvent());
+      } else {
+        log("no permission given yet");
       }
     });
 
