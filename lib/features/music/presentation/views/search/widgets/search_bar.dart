@@ -3,14 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:music_player/features/music/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:music_player/features/music/presentation/core/theme/dimensions.dart';
 
-class SearchBar extends StatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class AppSearchBar extends StatefulWidget {
+  const AppSearchBar({Key? key}) : super(key: key);
 
   @override
-  State<SearchBar> createState() => _SearchBarState();
+  State<AppSearchBar> createState() => _AppSearchBarState();
 }
 
-class _SearchBarState extends State<SearchBar> {
+class _AppSearchBarState extends State<AppSearchBar> {
   final textController = TextEditingController();
   final ValueNotifier<bool> clearNotifier = ValueNotifier<bool>(false);
   @override

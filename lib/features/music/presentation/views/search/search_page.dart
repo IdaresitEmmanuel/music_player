@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
     return Scaffold(
       body: SafeArea(
         child: Column(children: [
-          const SearchBar(),
+          const AppSearchBar(),
           const SearchCategoryWidget(),
           Expanded(
             child: BlocBuilder<SearchBloc, SearchState>(
